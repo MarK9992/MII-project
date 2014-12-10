@@ -15,7 +15,7 @@ import java.util.Set;
  * @author Marc Karassev
  * 
  */
-public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
+public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 
 	// Constants
 
@@ -59,9 +59,9 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	 * Calculates and displays the resulting percentages for each disease.
 	 */
 	public void evaluate() {
-		Set<String> set = keySet();
-		Iterator<String> it = set.iterator();
-		String key;
+		Set<Disease> set = keySet();
+		Iterator<Disease> it = set.iterator();
+		Disease key;
 
 		while (it.hasNext()) {
 			key = it.next();
@@ -77,7 +77,7 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	 *            the key matching the wanted disease
 	 * @return the number of matching answers
 	 */
-	public int getMatchingAnswers(String key) {
+	public int getMatchingAnswers(Disease key) {
 		return get(key).get(ANSWERSMATCHINDEX);
 	}
 
@@ -88,7 +88,7 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	 *            the key matching the wanted disease
 	 * @return the number of matching questions
 	 */
-	public int getMatchingQuestions(String key) {
+	public int getMatchingQuestions(Disease key) {
 		return get(key).get(QUESTIONSMATCHINDEX);
 	}
 
@@ -99,7 +99,7 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	 *            the key matching the wanted disease
 	 * @return the resulting percentage
 	 */
-	public int getPercentage(String key) {
+	public int getPercentage(Disease key) {
 		return get(key).get(PERCENTAGEINDEX);
 	}
 
@@ -110,15 +110,15 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 		list.add(0);
 		list.add(0);
 		list.add(0);
-		put("flu", new ArrayList<Integer>(list));
-		put("comcold", new ArrayList<Integer>(list));
-		put("concussion", new ArrayList<Integer>(list));
-		put("otitis", new ArrayList<Integer>(list));
-		put("bronchitis", new ArrayList<Integer>(list));
-		put("mono", new ArrayList<Integer>(list));
-		put("myocarditis", new ArrayList<Integer>(list));
-		put("pneumonia", new ArrayList<Integer>(list));
-		put("lyme", new ArrayList<Integer>(list));
+		put(Disease.FLU, new ArrayList<Integer>(list));
+		put(Disease.COMMONCOLD, new ArrayList<Integer>(list));
+		put(Disease.CONCUSSION, new ArrayList<Integer>(list));
+		put(Disease.OTITIS, new ArrayList<Integer>(list));
+		put(Disease.BRONCHITIS, new ArrayList<Integer>(list));
+		put(Disease.MONO, new ArrayList<Integer>(list));
+		put(Disease.MYOCARDITIS, new ArrayList<Integer>(list));
+		put(Disease.PNEUMONIA, new ArrayList<Integer>(list));
+		put(Disease.LYME, new ArrayList<Integer>(list));
 	}
 
 	// Increments the number of answers matching a disease.
@@ -132,7 +132,7 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	}
 
 	// Calculates the resulting percentage of a given disease.
-	private void percentage(String key) {
+	private void percentage(Disease key) {
 		if (get(key).get(QUESTIONSMATCHINDEX) != 0)
 			get(key).set(
 					PERCENTAGEINDEX,

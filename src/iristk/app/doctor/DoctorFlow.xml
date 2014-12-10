@@ -363,8 +363,10 @@
 	<state id="evaluate">
 		<onentry>
 		<!-- So light! -->
-		<!-- Okay I've not seen the 'c' thing. We'll need to think about how you can get and test the percentages. -->
-		<exec>map.evaluate(); int c = map.getPercentage("concussion")</exec>
+		<exec>map.evaluate()</exec>
+		<!-- Okay I've not seen the 'c' thing. We'll need to discuss about how you can get and test the percentages.
+		Perhaps the following seems OK -->
+		<var name="c" type="int" value="map.getPercentage(Disease.CONCUSSION)"/>
        	<if cond="(c&gt;70)">
 			<goto state="dizzy"/>
 		</if>

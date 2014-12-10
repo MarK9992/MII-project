@@ -1239,7 +1239,8 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				map.evaluate(); int c = map.getPercentage("concussion");
+				map.evaluate();
+				int c = asInteger(map.getPercentage(Disease.CONCUSSION));
 				if ((c>70)) {
 					dizzy state71 = new dizzy();
 					flowRunner.gotoState(state71, this, evaluate.this, event);
