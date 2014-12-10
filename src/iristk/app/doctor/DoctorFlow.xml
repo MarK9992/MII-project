@@ -362,7 +362,8 @@
 	
 	<state id="evaluate">
 		<onentry>
-		<!-- So light!  -->
+		<!-- So light! -->
+		<!-- Okay I've not seen the 'c' thing. We'll need to think about how you can get and test the percentages. -->
 		<exec>map.evaluate(); int c = map.getPercentage("concussion")</exec>
        	<if cond="(c&gt;70)">
 			<goto state="dizzy"/>
