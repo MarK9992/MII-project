@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" root="srgs_root"
+	xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar srgs.xsd" tag-format="semantics/1.0">
+	
+	<rule id="srgs_root" scope="public">
+		<one-of>
+			<item>
+				<one-of>
+					<item>good</item>
+				</one-of>
+				<tag>out.good=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>bad</item>
+				</one-of>
+				<tag>out.bad=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>yes</item>
+				</one-of>
+				<tag>out.yes=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>no</item>
+				</one-of>
+				<tag>out.no=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>eyes</item>
+				</one-of>
+				<tag>out.eyes=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>ears</item>
+				</one-of>
+				<tag>out.ears=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>muscles</item>
+				</one-of>
+				<tag>out.muscles=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>chest</item>
+				</one-of>
+				<tag>out.chest=1</tag>
+			</item>
+				<item>
+				<one-of>
+					<item>can you repeat the question</item>
+				</one-of>
+				<tag>out.repeat=1</tag>
+			</item>
+		</one-of>
+	</rule> 
+	
+</grammar>

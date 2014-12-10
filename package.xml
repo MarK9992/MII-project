@@ -1,0 +1,8 @@
+<package name="doctor">
+	<run>
+		<command name="doctor" class="iristk.app.doctor.DoctorSystem" descr="Run the Doctor application"/>
+	</run>
+	<classpath>
+		<src path="src" output="bin"/>
+	</classpath>
+</package>

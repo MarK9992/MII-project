@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+    targetNamespace="iristk.situated.SituatedDialog"
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow">
+    <import namespace="iristk.flow" schemaLocation="flow.xsd"/>
+    <element name="attend">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute default="'headpose'" name="mode" type="string"/>
+            <attribute default="'nobody'" name="target" type="string"/>
+            <attribute default="'head'" name="part" type="string"/>
+        </complexType>
+    </element>
+    <element name="attendNobody">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="attendRandom">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="attendOther">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute default="'headpose'" name="mode" type="string"/>
+        </complexType>
+    </element>
+    <element name="attendAll">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="attendAsleep">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="prompt">
+        <complexType mixed="true">
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute name="text" type="string"/>
+            <attribute default="8000" name="timeout" type="string"/>
+            <attribute default="500" name="endSil" type="string"/>
+            <attribute default="1" name="nbest" type="string"/>
+            <attribute name="grammar" type="string"/>
+        </complexType>
+    </element>
+    <element name="say">
+        <complexType mixed="true">
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute name="text" type="string"/>
+        </complexType>
+    </element>
+    <element name="listen">
+        <complexType>
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute default="8000" name="timeout" type="string"/>
+            <attribute default="500" name="endSil" type="string"/>
+            <attribute default="1" name="nbest" type="string"/>
+            <attribute name="grammar" type="string"/>
+        </complexType>
+    </element>
+</schema>
