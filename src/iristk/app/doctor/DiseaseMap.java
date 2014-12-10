@@ -2,6 +2,8 @@ package iristk.app.doctor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Hashmap for storing disease evaluation results.
@@ -27,6 +29,21 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	public DiseaseMap() {
 		super();
 		init();
+	}
+	
+	/**
+	 * Calculates and displays the resulting percentages for each disease.
+	 */
+	public void evaluate() {
+		Set<String> set = keySet();
+		Iterator<String> it = set.iterator();
+		String key;
+		
+		while(it.hasNext()) {
+			key = it.next();
+			percentage(key);
+			System.out.println(get(key).get(PERCENTAGEINDEX));
+		}
 	}
 	
 	// Initializes the map.
@@ -59,6 +76,7 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	
 	// Calculates the resulting percentage of a given disease.
 	private void percentage(String key) {
-		get(key).set(PERCENTAGEINDEX, get(key).get(ANSWERSMATCHINDEX) * 100 / get(key).get(QUESTIONSMATCHINDEX));
+		if(get(key).get(QUESTIONSMATCHINDEX) != 0)
+			get(key).set(PERCENTAGEINDEX, get(key).get(ANSWERSMATCHINDEX) * 100 / get(key).get(QUESTIONSMATCHINDEX));
 	}
 }

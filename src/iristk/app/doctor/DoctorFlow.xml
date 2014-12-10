@@ -13,33 +13,15 @@
 	<var name="question" type="Question"/>
 	<var name="guess" type="int" value="0"/>
 	<var name="winningScore" type="int" value="3"/>
-	<var name="map" type="java.util.HashMap&lt;String, java.util.ArrayList&lt;Integer&gt;&gt;" value="new java.util.HashMap&lt;String, java.util.ArrayList&lt;Integer&gt;&gt;()"/>
+	<var name="map" type="DiseaseMap" value="new DiseaseMap()"/> <!-- How clean! -->
 	
 	
 	
 	<state id="Idle">
 		<onentry>
 			<dialog:attendNobody />
-			<!-- dirtyness here -->
-			<exec>ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();list.add(0);list.add(0);list.add(0)</exec>
-			<exec>map.put("flu", new ArrayList&lt;Integer&gt;(list))</exec>
-			<!-- To add new diseases copy paste the two next lines and update the values -->
-			<exec>map.put("comcold", new ArrayList&lt;Integer&gt;(list))</exec>
-			
-			<exec>map.put("concussion", new ArrayList&lt;Integer&gt;(list))</exec>
-			
-			<exec>map.put("otitis", new ArrayList&lt;Integer&gt;(list))</exec>
-			
-			<exec>map.put("bronchitis", new ArrayList&lt;Integer&gt;(list))</exec>
-
-			<exec>map.put("mono", new ArrayList&lt;Integer&gt;(list))</exec>
-			
-			<exec>map.put("myocarditis", new ArrayList&lt;Integer&gt;(list))</exec>
-			
-			<exec>map.put("pneumonia", new ArrayList&lt;Integer&gt;(list))</exec>
-
-			<exec>map.put("lyme disease", new ArrayList&lt;Integer&gt;(list))</exec>
-			
+			<!-- no dirtyness anymore -->
+			<!-- To add new diseases go to the init method of DiseaseMap.java -->
 		</onentry>
 		<onevent name="sense.user.enter">
 			<dialog:attend target="event:agent"/>
@@ -95,488 +77,456 @@
 	</state>
 	
 	<state id="soar_throat"  extends="Dialog">
-	<onentry>
-		<dialog:say>Do you have a soar throat?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		<dialog:say>You have a soar throat!</dialog:say>
-		<send event="action.gesture" p:name="'emotion_anger'"/>
-		<!-- to increment a diseases's value copy paste the following line and update the key name -->
-		<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-		<goto state="cough"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-		<dialog:say>You don't have a soar throat!</dialog:say>
-		<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+		<onentry>
+			<dialog:say>Do you have a soar throat?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-		
-		<send event="action.gesture" p:name="'wake_up'"/>
-		<goto state="cough"/>
-	</onevent>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+			<dialog:say>You have a soar throat!</dialog:say>
+			<send event="action.gesture" p:name="'emotion_anger'"/>
+			<!-- to increment a diseases's value copy paste the following line and update the key name -->
+			<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<goto state="cough"/>
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
-	
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+			<dialog:say>You don't have a soar throat!</dialog:say>
+			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			
+			
+			<send event="action.gesture" p:name="'wake_up'"/>
+			<goto state="cough"/>
+		</onevent>
+		
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="cough"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you suffering from cough?</dialog:say>
+		<onentry>
+			<dialog:say>Are you suffering from cough?</dialog:say>
+			
+			<dialog:listen/>
+		</onentry>
 		
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	
-		<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 		
-		<dialog:say>Okay</dialog:say>
-		<goto state="headache"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-	
-		<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<dialog:say>Good for you</dialog:say>
-		<goto state="headache"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+			<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			
+			<dialog:say>Okay</dialog:say>
+			<goto state="headache"/>
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
-	
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+		
+			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<dialog:say>Good for you</dialog:say>
+			<goto state="headache"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	
 	<state id="headache"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you suffering from headache?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes">
-		<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
-		<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
-	
-	 
-		<dialog:say>Okay</dialog:say>
-		<goto state="sleepy"/>
+		<onentry>
+			<dialog:say>Are you suffering from headache?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-	
-			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec> map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
-		<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
-		<dialog:say>Good for you</dialog:say>
-		<goto state="sleepy"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes">
+			<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
+			<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
+		
+		 
+			<dialog:say>Okay</dialog:say>
+			<goto state="sleepy"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
-	
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+		
+				<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec> map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
+			<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
+			<dialog:say>Good for you</dialog:say>
+			<goto state="sleepy"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	
 	<state id="sleepy"  extends="Dialog">
-	<onentry>
+		<onentry>
+			
+			<dialog:say>Are you sleepy?</dialog:say>
+			<dialog:listen/>
+			
+		</onentry>
 		
-		<dialog:say>Are you sleepy?</dialog:say>
-		<dialog:listen/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 		
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	
-		<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
-		<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>	
-		<dialog:say>Okay</dialog:say>
-		<goto state="fever"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-		<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
-		<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>	
-		<dialog:say>Good for you, pneumonia</dialog:say>
-		<goto state="fever"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+			<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
+			<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>	
+			<dialog:say>Okay</dialog:say>
+			<goto state="fever"/>
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+			<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
+			<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>	
+			<dialog:say>Good for you, pneumonia</dialog:say>
+			<goto state="fever"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="fever"  extends="Dialog">
-	<onentry>
-		<dialog:say>Do you have fever?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("otitis").set(0, map.get("otitis").get(0) + 1); map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
-		<dialog:say>Okay</dialog:say>
-		<goto state="pain"/>
+		<onentry>
+			<dialog:say>Do you have fever?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-		<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-		<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec> 
-		<dialog:say>Good for you</dialog:say>
-		<goto state="pain"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("otitis").set(0, map.get("otitis").get(0) + 1); map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
+			<dialog:say>Okay</dialog:say>
+			<goto state="pain"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
+			<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec> 
+			<dialog:say>Good for you</dialog:say>
+			<goto state="pain"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-		<state id="pain"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you in pain?</dialog:say>
-		<send event="action.gesture" p:name="'emotion_anger'"/>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 3)</exec>
-		<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec> 
-		<goto state="whatpain"/>
-	</onevent>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-		<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 3)</exec>
-		<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
-		<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
-		<dialog:say>Keep it up!</dialog:say>
-		<goto state="evaluate"/>
-	</onevent>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+	<state id="pain"  extends="Dialog">
+		<onentry>
+			<dialog:say>Are you in pain?</dialog:say>
+			<send event="action.gesture" p:name="'emotion_anger'"/>
+			<dialog:listen/>
+		</onentry>
+		
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+			<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 3)</exec>
+			<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec> 
+			<goto state="whatpain"/>
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+			<exec>map.get("otitis").set(1, map.get("otitis").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 3)</exec>
+			<exec>map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1)</exec>
+			<exec>map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1)</exec>
+			<dialog:say>Keep it up!</dialog:say>
+			<goto state="evaluate"/>
+		</onevent>
+		
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="repain"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you in pain in another bodypart?</dialog:say>
-		<send event="action.gesture" p:name="'emotion_anger'"/>
-		<dialog:listen/>
-	</onentry>
+		<onentry>
+			<dialog:say>Are you in pain in another bodypart?</dialog:say>
+			<send event="action.gesture" p:name="'emotion_anger'"/>
+			<dialog:listen/>
+		</onentry>
+		
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+			
+			
 	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		
-		
-
-		<goto state="whatpain"/>
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-		<dialog:say>Keep it up!</dialog:say>
-		<goto state="evaluate"/>
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+			<goto state="whatpain"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
+			<dialog:say>Keep it up!</dialog:say>
+			<goto state="evaluate"/>
+			
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-		<state id="whatpain"  extends="Dialog">
-	<onentry>
-		<dialog:say>Where are you suffering from pain? In your eyes, your ears, your muscles or your chest?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:eyes"> 
-	<exec>map.get("flu").set(0, map.get("flu").get(0) + 1)</exec> 
-		<dialog:say>Okay, your eyes</dialog:say>
-		<goto state="repain"/>
+	<state id="whatpain"  extends="Dialog">
+		<onentry>
+			<dialog:say>Where are you suffering from pain? In your eyes, your ears, your muscles or your chest?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:ears"> 
-	<exec>map.get("otitis").set(0, map.get("otitis").get(0) + 1)</exec>	
-		<dialog:say>Okay, your ears</dialog:say>
-		<goto state="repain"/>
-		
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:muscles">
-		<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1)</exec>	
+		<onevent name="sense.user.speech**" cond="event?:sem:eyes"> 
 		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1)</exec> 
-		<dialog:say>Okay, your muscles</dialog:say>
-		<goto state="repain"/>
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:chest"> 
-	<exec>map.get("flu").set(0, map.get("flu").get(0) + 1)</exec> 
-	<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1)</exec>
-		
-		<dialog:say>Okay, your chest</dialog:say>
-		<goto state="repain"/>
-		
-		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+			<dialog:say>Okay, your eyes</dialog:say>
+			<goto state="repain"/>
+			
+			
 		</onevent>
-
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:ears"> 
+		<exec>map.get("otitis").set(0, map.get("otitis").get(0) + 1)</exec>	
+			<dialog:say>Okay, your ears</dialog:say>
+			<goto state="repain"/>
+			
+			
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:muscles">
+			<exec>map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1)</exec> 
+			<dialog:say>Okay, your muscles</dialog:say>
+			<goto state="repain"/>
+			
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:chest"> 
+		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1)</exec> 
+		<exec>map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1)</exec>
+			
+			<dialog:say>Okay, your chest</dialog:say>
+			<goto state="repain"/>
+			
+			
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+	
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="evaluate">
 		<onentry>
-		
-		<!-- Evaluate % !  -->
-		<exec>int a =(map.get("comcold").get(0)*100)/(map.get("comcold").get(1))</exec>
-		<exec>System.out.println("comcold" +a)</exec>
-		<exec>map.get("comcold").set(2,a)</exec> 
-		<exec>int b=(map.get("flu").get(0)*100)/(map.get("flu").get(1))</exec>
-		<exec>System.out.println("flu" + b)</exec>
-		<exec>map.get("flu").set(2,b)</exec> 
-		<exec>int c=(map.get("concussion").get(0)*100)/(map.get("concussion").get(1))</exec>
-		<exec>System.out.println("concussion" + c)</exec>
-		<exec>map.get("concussion").set(2,c)</exec> 
-		<exec>int d=(map.get("otitis").get(0)*100)/(map.get("otitis").get(1))</exec>
-		<exec>System.out.println("otitis" + d)</exec>
-		<exec>map.get("otitis").set(2,d)</exec> 
-		<exec>int e=(map.get("bronchitis").get(0)*100)/(map.get("bronchitis").get(1))</exec>
-		<exec>System.out.println("bronchitis" + e)</exec>
-		<exec>map.get("bronchitis").set(2,e)</exec> 
-		<exec>int f=(map.get("mono").get(0)*100)/(map.get("mono").get(1))</exec>
-		<exec>System.out.println("mono" + f)</exec>
-		<exec>map.get("mono").set(2,f)</exec> 
-		<exec>int g=(map.get("myocarditis").get(0)*100)/(map.get("myocarditis").get(1))</exec>
-		<exec>System.out.println("myocarditis" + g)</exec>
-		<exec>map.get("myocarditis").set(2,g)</exec> 
-		<exec>int h=(map.get("pneumonia").get(0)*100)/(map.get("pneumonia").get(1))</exec>
-		<exec>System.out.println("pneumonia" + h)</exec>
-		<exec>map.get("pneumonia").set(2,h)</exec> 
-		<exec>int i=(map.get("lyme disease").get(0)*100)/(map.get("lyme disease").get(1))</exec>
-		<exec>System.out.println("lyme disease" + i)</exec>
-		<exec>map.get("lyme disease").set(2,i)</exec>
-		
-       <if cond="(c&gt;70)">
-					<goto state="dizzy"/>
+		<!-- So light!  -->
+		<exec>map.evaluate(); int c = map.get("concussion").get(2)</exec>
+       	<if cond="(c&gt;70)">
+			<goto state="dizzy"/>
 		</if>
 		</onentry>
-		
 	</state>
 	
 	
-		<state id="frozen"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you frozen?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<dialog:say>Okay</dialog:say>
-		<goto state="runnose"/>
+	<state id="frozen"  extends="Dialog">
+		<onentry>
+			<dialog:say>Are you frozen?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<dialog:say>Good for you</dialog:say>
-		<goto state="runnose"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<dialog:say>Okay</dialog:say>
+			<goto state="runnose"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<dialog:say>Good for you</dialog:say>
+			<goto state="runnose"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="runnose"  extends="Dialog">
-	<onentry>
-		<dialog:say>Do you have a runny nose?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<dialog:say>Okay</dialog:say>
-		<goto state="endevaluation"/>
+		<onentry>
+			<dialog:say>Do you have a runny nose?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-		<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-		<dialog:say>Good for you</dialog:say>
-		<goto state="endevaluation"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<dialog:say>Okay</dialog:say>
+			<goto state="endevaluation"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
+			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
+			<dialog:say>Good for you</dialog:say>
+			<goto state="endevaluation"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
 	<state id="dizzy"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you feeling dizzy?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Okay</dialog:say>
-		<goto state="nausea"/>
+		<onentry>
+			<dialog:say>Are you feeling dizzy?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Good for you</dialog:say>
-		<goto state="nausea"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Okay</dialog:say>
+			<goto state="nausea"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Good for you</dialog:say>
+			<goto state="nausea"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-		<state id="nausea"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you nauseous?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Okay</dialog:say>
-		<goto state="vomit"/>
+	<state id="nausea"  extends="Dialog">
+		<onentry>
+			<dialog:say>Are you nauseous?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Good for you</dialog:say>
-		<goto state="vomit"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Okay</dialog:say>
+			<goto state="vomit"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Good for you</dialog:say>
+			<goto state="vomit"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-			<state id="vomit"  extends="Dialog">
-	<onentry>
-		<dialog:say>Have you vomited?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Okay</dialog:say>
-		<goto state="amnesia"/>
+	<state id="vomit"  extends="Dialog">
+		<onentry>
+			<dialog:say>Have you vomited?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Good for you</dialog:say>
-		<goto state="amnesia"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Okay</dialog:say>
+			<goto state="amnesia"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Good for you</dialog:say>
+			<goto state="amnesia"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-			<state id="amnesia"  extends="Dialog">
-	<onentry>
-		<dialog:say>Are you experiencing amnesia?</dialog:say>
-		<dialog:listen/>
-	</onentry>
-	
-	<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-	<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Okay</dialog:say>
-		<goto state="endevaluation"/>
+	<state id="amnesia"  extends="Dialog">
+		<onentry>
+			<dialog:say>Are you experiencing amnesia?</dialog:say>
+			<dialog:listen/>
+		</onentry>
 		
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:no">
-		<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
-		<dialog:say>Good for you</dialog:say>
-		<goto state="endevaluation"/>
-	</onevent>
-	<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-			<reentry/>
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
+		<exec>map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Okay</dialog:say>
+			<goto state="endevaluation"/>
+			
 		</onevent>
-	<onevent name="sense.user.speech**">
-			<reentry/>
-	</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
+			<exec>map.get("concussion").set(1, map.get("concussion").get(1) + 1)</exec>	
+			<dialog:say>Good for you</dialog:say>
+			<goto state="endevaluation"/>
+		</onevent>
+		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
+				<reentry/>
+			</onevent>
+		<onevent name="sense.user.speech**">
+				<reentry/>
+		</onevent>
 	</state>
 	
-		<state id="endevaluation"  extends="Dialog">
-	<onentry>
-		<dialog:say>Hope you don't die!</dialog:say>
-	</onentry>
+	<state id="endevaluation"  extends="Dialog">
+		<onentry>
+			<dialog:say>Hope you don't die!</dialog:say>
+		</onentry>
 	</state>
 
 <!--  	<state id="Idle">

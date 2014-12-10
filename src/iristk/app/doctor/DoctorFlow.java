@@ -1,6 +1,5 @@
 package iristk.app.doctor;
 
-import java.util.ArrayList;
 import java.util.List;
 import iristk.system.Event;
 import iristk.app.quiz.Question;
@@ -17,13 +16,13 @@ public class DoctorFlow extends iristk.flow.Flow {
 	private Question question;
 	private int guess;
 	private int winningScore;
-	private java.util.HashMap<String, java.util.ArrayList<Integer>> map;
+	private DiseaseMap map;
 
 	private void initVariables() {
 		users = (iristk.situated.UserModel) dialog.getUsers();
 		guess = asInteger(0);
 		winningScore = asInteger(3);
-		map = (java.util.HashMap<String, java.util.ArrayList<Integer>>) new java.util.HashMap<String, java.util.ArrayList<Integer>>();
+		map = (DiseaseMap) new DiseaseMap();
 	}
 
 	public iristk.situated.UserModel getUsers() {
@@ -58,11 +57,11 @@ public class DoctorFlow extends iristk.flow.Flow {
 		this.winningScore = value;
 	}
 
-	public java.util.HashMap<String, java.util.ArrayList<Integer>> getMap() {
+	public DiseaseMap getMap() {
 		return this.map;
 	}
 
-	public void setMap(java.util.HashMap<String, java.util.ArrayList<Integer>> value) {
+	public void setMap(DiseaseMap value) {
 		this.map = value;
 	}
 
@@ -116,16 +115,6 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				ArrayList<Integer> list = new ArrayList<Integer>();list.add(0);list.add(0);list.add(0);
-				map.put("flu", new ArrayList<Integer>(list));
-				map.put("comcold", new ArrayList<Integer>(list));
-				map.put("concussion", new ArrayList<Integer>(list));
-				map.put("otitis", new ArrayList<Integer>(list));
-				map.put("bronchitis", new ArrayList<Integer>(list));
-				map.put("mono", new ArrayList<Integer>(list));
-				map.put("myocarditis", new ArrayList<Integer>(list));
-				map.put("pneumonia", new ArrayList<Integer>(list));
-				map.put("lyme disease", new ArrayList<Integer>(list));
 			}
 		}
 
@@ -1250,33 +1239,7 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				int a =(map.get("comcold").get(0)*100)/(map.get("comcold").get(1));
-				System.out.println("comcold" +a);
-				map.get("comcold").set(2,a);
-				int b=(map.get("flu").get(0)*100)/(map.get("flu").get(1));
-				System.out.println("flu" + b);
-				map.get("flu").set(2,b);
-				int c=(map.get("concussion").get(0)*100)/(map.get("concussion").get(1));
-				System.out.println("concussion" + c);
-				map.get("concussion").set(2,c);
-				int d=(map.get("otitis").get(0)*100)/(map.get("otitis").get(1));
-				System.out.println("otitis" + d);
-				map.get("otitis").set(2,d);
-				int e=(map.get("bronchitis").get(0)*100)/(map.get("bronchitis").get(1));
-				System.out.println("bronchitis" + e);
-				map.get("bronchitis").set(2,e);
-				int f=(map.get("mono").get(0)*100)/(map.get("mono").get(1));
-				System.out.println("mono" + f);
-				map.get("mono").set(2,f);
-				int g=(map.get("myocarditis").get(0)*100)/(map.get("myocarditis").get(1));
-				System.out.println("myocarditis" + g);
-				map.get("myocarditis").set(2,g);
-				int h=(map.get("pneumonia").get(0)*100)/(map.get("pneumonia").get(1));
-				System.out.println("pneumonia" + h);
-				map.get("pneumonia").set(2,h);
-				int i=(map.get("lyme disease").get(0)*100)/(map.get("lyme disease").get(1));
-				System.out.println("lyme disease" + i);
-				map.get("lyme disease").set(2,i);
+				map.evaluate(); int c = map.get("concussion").get(2);
 				if ((c>70)) {
 					dizzy state71 = new dizzy();
 					flowRunner.gotoState(state71, this, evaluate.this, event);
