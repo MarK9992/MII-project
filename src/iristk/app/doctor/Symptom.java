@@ -20,7 +20,6 @@ public enum Symptom {
 	
 	// Attributes
 	
-	private Disease d;
 	private HashSet<Disease> diseases;
 	
 	// Constructors

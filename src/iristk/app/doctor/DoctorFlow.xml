@@ -78,6 +78,8 @@
 	
 	<state id="soar_throat"  extends="Dialog">
 		<onentry>
+			<!-- So smooth ! -->
+			<exec>map.questionSymptom(Symptom.SOARTHROAT)</exec>
 			<dialog:say>Do you have a soar throat?</dialog:say>
 			<dialog:listen/>
 		</onentry>
@@ -85,58 +87,43 @@
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 			<dialog:say>You have a soar throat!</dialog:say>
 			<send event="action.gesture" p:name="'emotion_anger'"/>
-			<!-- to increment a diseases's value copy paste the following line and update the key name -->
-			<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-			<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-			<exec>map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
+			<!-- So smooth ! (2) -->
+			<exec>map.answerSymptom(Symptom.SOARTHROAT)</exec>
 			<goto state="cough"/>
 		</onevent>
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<dialog:say>You don't have a soar throat!</dialog:say>
-			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-			<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-			<exec>map.get("mono").set(1, map.get("mono").get(1) + 1)</exec>
-			
-			
+		<onevent name="sense.user.speech**" cond="event?:sem:no">
 			<send event="action.gesture" p:name="'wake_up'"/>
 			<goto state="cough"/>
 		</onevent>
-		
 		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
 				<reentry/>
 			</onevent>
 		<onevent name="sense.user.speech**">
 				<reentry/>
 		</onevent>
+		
+		
+		<!--  I think you should do test cases into one "onevent" bloc instead of several "onevent" blocs
+		since the event name is the same. I think it will be more readable this way. -->
+		
+		
 	</state>
 	
 	<state id="cough"  extends="Dialog">
 		<onentry>
+			<!-- So smooth ! (3) -->
+			<exec>map.questionSymptom(Symptom.COUGH)</exec>
 			<dialog:say>Are you suffering from cough?</dialog:say>
-			
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		
-			<exec>map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-			<exec>map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-			<exec>map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-			<exec>map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
-			
+			<!-- So smooth ! (4) -->
+			<exec>map.answerSymptom(Symptom.COUGH)</exec>
 			<dialog:say>Okay</dialog:say>
 			<goto state="headache"/>
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-		
-			<exec>map.get("comcold").set(1, map.get("comcold").get(1) + 1)</exec>	
-			<exec>map.get("flu").set(1, map.get("flu").get(1) + 1)</exec>
-			<exec>map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1)</exec>
-			<exec>map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1)</exec>
 			<dialog:say>Good for you</dialog:say>
 			<goto state="headache"/>
 		</onevent>
@@ -150,6 +137,11 @@
 	
 	
 	<state id="headache"  extends="Dialog">
+		
+		
+		<!-- Your turn to be smooth now ! See the Symptom.java file. -->
+		
+		
 		<onentry>
 			<dialog:say>Are you suffering from headache?</dialog:say>
 			<dialog:listen/>

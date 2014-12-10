@@ -42,7 +42,13 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	 *            the related symptom
 	 */
 	public void answerSymptom(Symptom symptom) {
-		// TODO
+		Iterator<Disease> it = symptom.getDiseases().iterator();
+		Disease disease;
+		
+		while(it.hasNext()) {
+			disease = it.next();
+			incrementAnswersMatch(disease);
+		}
 	}
 
 	/**
@@ -52,15 +58,20 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	 *            the related symptom
 	 */
 	public void questionSymptom(Symptom symptom) {
-		// TODO
+		Iterator<Disease> it = symptom.getDiseases().iterator();
+		Disease disease;
+		
+		while(it.hasNext()) {
+			disease = it.next();
+			incrementQuestionsMatch(disease);
+		}
 	}
 
 	/**
 	 * Calculates and displays the resulting percentages for each disease.
 	 */
 	public void evaluate() {
-		Set<Disease> set = keySet();
-		Iterator<Disease> it = set.iterator();
+		Iterator<Disease> it = keySet().iterator();
 		Disease key;
 
 		while (it.hasNext()) {
@@ -122,12 +133,12 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	}
 
 	// Increments the number of answers matching a disease.
-	private void incrementAnswersMatch(String key) {
-		get(key).set(ANSWERSMATCHINDEX, get(key).get(ANSWERSMATCHINDEX) + 1);
+	private void incrementAnswersMatch(Disease disease) {
+		get(disease).set(ANSWERSMATCHINDEX, get(disease).get(ANSWERSMATCHINDEX) + 1);
 	}
 
 	// Increments the number of questions matching a disease.
-	private void incrementQuestionsMatch(String key) {
+	private void incrementQuestionsMatch(Disease key) {
 		get(key).set(QUESTIONSMATCHINDEX, get(key).get(QUESTIONSMATCHINDEX) + 1);
 	}
 

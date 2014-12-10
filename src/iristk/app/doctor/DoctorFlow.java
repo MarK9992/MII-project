@@ -363,6 +363,7 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
+				map.questionSymptom(Symptom.SOARTHROAT);
 				iristk.situated.SituatedDialog.say state17 = dialog.new say();
 				state17.setText("Do you have a soar throat?");
 				if (!flowRunner.callState(state17, soar_throat.this, event)) {
@@ -393,11 +394,7 @@ public class DoctorFlow extends iristk.flow.Flow {
 						Event sendEvent20 = new Event("action.gesture");
 						sendEvent20.put("name", "emotion_anger");
 						flowRunner.sendEvent(sendEvent20, soar_throat.this, event);
-						map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1);
-						map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1);
-						map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1);
-						map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
-						map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1);
+						map.answerSymptom(Symptom.SOARTHROAT);
 						cough state21 = new cough();
 						flowRunner.gotoState(state21, this, soar_throat.this, event);
 						eventResult = EVENT_ABORTED;
@@ -410,22 +407,11 @@ public class DoctorFlow extends iristk.flow.Flow {
 				if (event.has("sem:no")) {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SituatedDialog.say state22 = dialog.new say();
-						state22.setText("You don't have a soar throat!");
-						if (!flowRunner.callState(state22, soar_throat.this, event)) {
-							eventResult = EVENT_ABORTED;
-							break EXECUTION;
-						}
-						map.get("comcold").set(1, map.get("comcold").get(1) + 1);
-						map.get("flu").set(1, map.get("flu").get(1) + 1);
-						map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1);
-						map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
-						map.get("mono").set(1, map.get("mono").get(1) + 1);
-						Event sendEvent23 = new Event("action.gesture");
-						sendEvent23.put("name", "wake_up");
-						flowRunner.sendEvent(sendEvent23, soar_throat.this, event);
-						cough state24 = new cough();
-						flowRunner.gotoState(state24, this, soar_throat.this, event);
+						Event sendEvent22 = new Event("action.gesture");
+						sendEvent22.put("name", "wake_up");
+						flowRunner.sendEvent(sendEvent22, soar_throat.this, event);
+						cough state23 = new cough();
+						flowRunner.gotoState(state23, this, soar_throat.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -476,14 +462,15 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state25 = dialog.new say();
-				state25.setText("Are you suffering from cough?");
-				if (!flowRunner.callState(state25, cough.this, event)) {
+				map.questionSymptom(Symptom.COUGH);
+				iristk.situated.SituatedDialog.say state24 = dialog.new say();
+				state24.setText("Are you suffering from cough?");
+				if (!flowRunner.callState(state24, cough.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state26 = dialog.new listen();
-				if (!flowRunner.callState(state26, cough.this, event)) {
+				iristk.situated.SituatedDialog.listen state25 = dialog.new listen();
+				if (!flowRunner.callState(state25, cough.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -497,18 +484,15 @@ public class DoctorFlow extends iristk.flow.Flow {
 				if (event.has("sem:yes")) {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1);
-						map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1);
-						map.get("bronchitis").set(0, map.get("bronchitis").get(0) + 1); map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1);
-						map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
-						iristk.situated.SituatedDialog.say state27 = dialog.new say();
-						state27.setText("Okay");
-						if (!flowRunner.callState(state27, cough.this, event)) {
+						map.answerSymptom(Symptom.COUGH);
+						iristk.situated.SituatedDialog.say state26 = dialog.new say();
+						state26.setText("Okay");
+						if (!flowRunner.callState(state26, cough.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						headache state28 = new headache();
-						flowRunner.gotoState(state28, this, cough.this, event);
+						headache state27 = new headache();
+						flowRunner.gotoState(state27, this, cough.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -519,18 +503,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 				if (event.has("sem:no")) {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						map.get("comcold").set(1, map.get("comcold").get(1) + 1);
-						map.get("flu").set(1, map.get("flu").get(1) + 1);
-						map.get("bronchitis").set(1, map.get("bronchitis").get(1) + 1);
-						map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
-						iristk.situated.SituatedDialog.say state29 = dialog.new say();
-						state29.setText("Good for you");
-						if (!flowRunner.callState(state29, cough.this, event)) {
+						iristk.situated.SituatedDialog.say state28 = dialog.new say();
+						state28.setText("Good for you");
+						if (!flowRunner.callState(state28, cough.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						headache state30 = new headache();
-						flowRunner.gotoState(state30, this, cough.this, event);
+						headache state29 = new headache();
+						flowRunner.gotoState(state29, this, cough.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -581,14 +561,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state31 = dialog.new say();
-				state31.setText("Are you suffering from headache?");
-				if (!flowRunner.callState(state31, headache.this, event)) {
+				iristk.situated.SituatedDialog.say state30 = dialog.new say();
+				state30.setText("Are you suffering from headache?");
+				if (!flowRunner.callState(state30, headache.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state32 = dialog.new listen();
-				if (!flowRunner.callState(state32, headache.this, event)) {
+				iristk.situated.SituatedDialog.listen state31 = dialog.new listen();
+				if (!flowRunner.callState(state31, headache.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -607,14 +587,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1);
 						map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1);
 						map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
-						iristk.situated.SituatedDialog.say state33 = dialog.new say();
-						state33.setText("Okay");
-						if (!flowRunner.callState(state33, headache.this, event)) {
+						iristk.situated.SituatedDialog.say state32 = dialog.new say();
+						state32.setText("Okay");
+						if (!flowRunner.callState(state32, headache.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						sleepy state34 = new sleepy();
-						flowRunner.gotoState(state34, this, headache.this, event);
+						sleepy state33 = new sleepy();
+						flowRunner.gotoState(state33, this, headache.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -630,14 +610,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("concussion").set(1, map.get("concussion").get(1) + 1);
 						map.get("mono").set(1, map.get("mono").get(1) + 1);
 						map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
-						iristk.situated.SituatedDialog.say state35 = dialog.new say();
-						state35.setText("Good for you");
-						if (!flowRunner.callState(state35, headache.this, event)) {
+						iristk.situated.SituatedDialog.say state34 = dialog.new say();
+						state34.setText("Good for you");
+						if (!flowRunner.callState(state34, headache.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						sleepy state36 = new sleepy();
-						flowRunner.gotoState(state36, this, headache.this, event);
+						sleepy state35 = new sleepy();
+						flowRunner.gotoState(state35, this, headache.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -688,14 +668,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state37 = dialog.new say();
-				state37.setText("Are you sleepy?");
-				if (!flowRunner.callState(state37, sleepy.this, event)) {
+				iristk.situated.SituatedDialog.say state36 = dialog.new say();
+				state36.setText("Are you sleepy?");
+				if (!flowRunner.callState(state36, sleepy.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state38 = dialog.new listen();
-				if (!flowRunner.callState(state38, sleepy.this, event)) {
+				iristk.situated.SituatedDialog.listen state37 = dialog.new listen();
+				if (!flowRunner.callState(state37, sleepy.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -715,14 +695,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
 						map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1); map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
 						map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
-						iristk.situated.SituatedDialog.say state39 = dialog.new say();
-						state39.setText("Okay");
-						if (!flowRunner.callState(state39, sleepy.this, event)) {
+						iristk.situated.SituatedDialog.say state38 = dialog.new say();
+						state38.setText("Okay");
+						if (!flowRunner.callState(state38, sleepy.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						fever state40 = new fever();
-						flowRunner.gotoState(state40, this, sleepy.this, event);
+						fever state39 = new fever();
+						flowRunner.gotoState(state39, this, sleepy.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -739,14 +719,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
 						map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
 						map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
-						iristk.situated.SituatedDialog.say state41 = dialog.new say();
-						state41.setText("Good for you, pneumonia");
-						if (!flowRunner.callState(state41, sleepy.this, event)) {
+						iristk.situated.SituatedDialog.say state40 = dialog.new say();
+						state40.setText("Good for you, pneumonia");
+						if (!flowRunner.callState(state40, sleepy.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						fever state42 = new fever();
-						flowRunner.gotoState(state42, this, sleepy.this, event);
+						fever state41 = new fever();
+						flowRunner.gotoState(state41, this, sleepy.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -797,14 +777,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state43 = dialog.new say();
-				state43.setText("Do you have fever?");
-				if (!flowRunner.callState(state43, fever.this, event)) {
+				iristk.situated.SituatedDialog.say state42 = dialog.new say();
+				state42.setText("Do you have fever?");
+				if (!flowRunner.callState(state42, fever.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state44 = dialog.new listen();
-				if (!flowRunner.callState(state44, fever.this, event)) {
+				iristk.situated.SituatedDialog.listen state43 = dialog.new listen();
+				if (!flowRunner.callState(state43, fever.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -823,14 +803,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("mono").set(0, map.get("mono").get(0) + 1); map.get("mono").set(1, map.get("mono").get(1) + 1);
 						map.get("pneumonia").set(0, map.get("pneumonia").get(0) + 1); map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
 						map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1); map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
-						iristk.situated.SituatedDialog.say state45 = dialog.new say();
-						state45.setText("Okay");
-						if (!flowRunner.callState(state45, fever.this, event)) {
+						iristk.situated.SituatedDialog.say state44 = dialog.new say();
+						state44.setText("Okay");
+						if (!flowRunner.callState(state44, fever.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						pain state46 = new pain();
-						flowRunner.gotoState(state46, this, fever.this, event);
+						pain state45 = new pain();
+						flowRunner.gotoState(state45, this, fever.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -846,14 +826,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("mono").set(1, map.get("mono").get(1) + 1);
 						map.get("pneumonia").set(1, map.get("pneumonia").get(1) + 1);
 						map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
-						iristk.situated.SituatedDialog.say state47 = dialog.new say();
-						state47.setText("Good for you");
-						if (!flowRunner.callState(state47, fever.this, event)) {
+						iristk.situated.SituatedDialog.say state46 = dialog.new say();
+						state46.setText("Good for you");
+						if (!flowRunner.callState(state46, fever.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						pain state48 = new pain();
-						flowRunner.gotoState(state48, this, fever.this, event);
+						pain state47 = new pain();
+						flowRunner.gotoState(state47, this, fever.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -904,17 +884,17 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state49 = dialog.new say();
-				state49.setText("Are you in pain?");
-				if (!flowRunner.callState(state49, pain.this, event)) {
+				iristk.situated.SituatedDialog.say state48 = dialog.new say();
+				state48.setText("Are you in pain?");
+				if (!flowRunner.callState(state48, pain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				Event sendEvent50 = new Event("action.gesture");
-				sendEvent50.put("name", "emotion_anger");
-				flowRunner.sendEvent(sendEvent50, pain.this, event);
-				iristk.situated.SituatedDialog.listen state51 = dialog.new listen();
-				if (!flowRunner.callState(state51, pain.this, event)) {
+				Event sendEvent49 = new Event("action.gesture");
+				sendEvent49.put("name", "emotion_anger");
+				flowRunner.sendEvent(sendEvent49, pain.this, event);
+				iristk.situated.SituatedDialog.listen state50 = dialog.new listen();
+				if (!flowRunner.callState(state50, pain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -932,8 +912,8 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("flu").set(1, map.get("flu").get(1) + 3);
 						map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
 						map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
-						whatpain state52 = new whatpain();
-						flowRunner.gotoState(state52, this, pain.this, event);
+						whatpain state51 = new whatpain();
+						flowRunner.gotoState(state51, this, pain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -948,14 +928,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 						map.get("flu").set(1, map.get("flu").get(1) + 3);
 						map.get("myocarditis").set(1, map.get("myocarditis").get(1) + 1);
 						map.get("lyme disease").set(1, map.get("lyme disease").get(1) + 1);
-						iristk.situated.SituatedDialog.say state53 = dialog.new say();
-						state53.setText("Keep it up!");
-						if (!flowRunner.callState(state53, pain.this, event)) {
+						iristk.situated.SituatedDialog.say state52 = dialog.new say();
+						state52.setText("Keep it up!");
+						if (!flowRunner.callState(state52, pain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						evaluate state54 = new evaluate();
-						flowRunner.gotoState(state54, this, pain.this, event);
+						evaluate state53 = new evaluate();
+						flowRunner.gotoState(state53, this, pain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1006,17 +986,17 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state55 = dialog.new say();
-				state55.setText("Are you in pain in another bodypart?");
-				if (!flowRunner.callState(state55, repain.this, event)) {
+				iristk.situated.SituatedDialog.say state54 = dialog.new say();
+				state54.setText("Are you in pain in another bodypart?");
+				if (!flowRunner.callState(state54, repain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				Event sendEvent56 = new Event("action.gesture");
-				sendEvent56.put("name", "emotion_anger");
-				flowRunner.sendEvent(sendEvent56, repain.this, event);
-				iristk.situated.SituatedDialog.listen state57 = dialog.new listen();
-				if (!flowRunner.callState(state57, repain.this, event)) {
+				Event sendEvent55 = new Event("action.gesture");
+				sendEvent55.put("name", "emotion_anger");
+				flowRunner.sendEvent(sendEvent55, repain.this, event);
+				iristk.situated.SituatedDialog.listen state56 = dialog.new listen();
+				if (!flowRunner.callState(state56, repain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1030,8 +1010,8 @@ public class DoctorFlow extends iristk.flow.Flow {
 				if (event.has("sem:yes")) {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						whatpain state58 = new whatpain();
-						flowRunner.gotoState(state58, this, repain.this, event);
+						whatpain state57 = new whatpain();
+						flowRunner.gotoState(state57, this, repain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1042,14 +1022,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 				if (event.has("sem:no")) {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SituatedDialog.say state59 = dialog.new say();
-						state59.setText("Keep it up!");
-						if (!flowRunner.callState(state59, repain.this, event)) {
+						iristk.situated.SituatedDialog.say state58 = dialog.new say();
+						state58.setText("Keep it up!");
+						if (!flowRunner.callState(state58, repain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						evaluate state60 = new evaluate();
-						flowRunner.gotoState(state60, this, repain.this, event);
+						evaluate state59 = new evaluate();
+						flowRunner.gotoState(state59, this, repain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1100,14 +1080,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state61 = dialog.new say();
-				state61.setText("Where are you suffering from pain? In your eyes, your ears, your muscles or your chest?");
-				if (!flowRunner.callState(state61, whatpain.this, event)) {
+				iristk.situated.SituatedDialog.say state60 = dialog.new say();
+				state60.setText("Where are you suffering from pain? In your eyes, your ears, your muscles or your chest?");
+				if (!flowRunner.callState(state60, whatpain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state62 = dialog.new listen();
-				if (!flowRunner.callState(state62, whatpain.this, event)) {
+				iristk.situated.SituatedDialog.listen state61 = dialog.new listen();
+				if (!flowRunner.callState(state61, whatpain.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1122,14 +1102,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("flu").set(0, map.get("flu").get(0) + 1);
-						iristk.situated.SituatedDialog.say state63 = dialog.new say();
-						state63.setText("Okay, your eyes");
-						if (!flowRunner.callState(state63, whatpain.this, event)) {
+						iristk.situated.SituatedDialog.say state62 = dialog.new say();
+						state62.setText("Okay, your eyes");
+						if (!flowRunner.callState(state62, whatpain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						repain state64 = new repain();
-						flowRunner.gotoState(state64, this, whatpain.this, event);
+						repain state63 = new repain();
+						flowRunner.gotoState(state63, this, whatpain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1141,14 +1121,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("otitis").set(0, map.get("otitis").get(0) + 1);
-						iristk.situated.SituatedDialog.say state65 = dialog.new say();
-						state65.setText("Okay, your ears");
-						if (!flowRunner.callState(state65, whatpain.this, event)) {
+						iristk.situated.SituatedDialog.say state64 = dialog.new say();
+						state64.setText("Okay, your ears");
+						if (!flowRunner.callState(state64, whatpain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						repain state66 = new repain();
-						flowRunner.gotoState(state66, this, whatpain.this, event);
+						repain state65 = new repain();
+						flowRunner.gotoState(state65, this, whatpain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1161,14 +1141,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					EXECUTION: {
 						map.get("lyme disease").set(0, map.get("lyme disease").get(0) + 1);
 						map.get("flu").set(0, map.get("flu").get(0) + 1);
-						iristk.situated.SituatedDialog.say state67 = dialog.new say();
-						state67.setText("Okay, your muscles");
-						if (!flowRunner.callState(state67, whatpain.this, event)) {
+						iristk.situated.SituatedDialog.say state66 = dialog.new say();
+						state66.setText("Okay, your muscles");
+						if (!flowRunner.callState(state66, whatpain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						repain state68 = new repain();
-						flowRunner.gotoState(state68, this, whatpain.this, event);
+						repain state67 = new repain();
+						flowRunner.gotoState(state67, this, whatpain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1181,14 +1161,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					EXECUTION: {
 						map.get("flu").set(0, map.get("flu").get(0) + 1);
 						map.get("myocarditis").set(0, map.get("myocarditis").get(0) + 1);
-						iristk.situated.SituatedDialog.say state69 = dialog.new say();
-						state69.setText("Okay, your chest");
-						if (!flowRunner.callState(state69, whatpain.this, event)) {
+						iristk.situated.SituatedDialog.say state68 = dialog.new say();
+						state68.setText("Okay, your chest");
+						if (!flowRunner.callState(state68, whatpain.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						repain state70 = new repain();
-						flowRunner.gotoState(state70, this, whatpain.this, event);
+						repain state69 = new repain();
+						flowRunner.gotoState(state69, this, whatpain.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1242,8 +1222,8 @@ public class DoctorFlow extends iristk.flow.Flow {
 				map.evaluate();
 				int c = asInteger(map.getPercentage(Disease.CONCUSSION));
 				if ((c>70)) {
-					dizzy state71 = new dizzy();
-					flowRunner.gotoState(state71, this, evaluate.this, event);
+					dizzy state70 = new dizzy();
+					flowRunner.gotoState(state70, this, evaluate.this, event);
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1277,14 +1257,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state72 = dialog.new say();
-				state72.setText("Are you frozen?");
-				if (!flowRunner.callState(state72, frozen.this, event)) {
+				iristk.situated.SituatedDialog.say state71 = dialog.new say();
+				state71.setText("Are you frozen?");
+				if (!flowRunner.callState(state71, frozen.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state73 = dialog.new listen();
-				if (!flowRunner.callState(state73, frozen.this, event)) {
+				iristk.situated.SituatedDialog.listen state72 = dialog.new listen();
+				if (!flowRunner.callState(state72, frozen.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1299,14 +1279,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1);
-						iristk.situated.SituatedDialog.say state74 = dialog.new say();
-						state74.setText("Okay");
-						if (!flowRunner.callState(state74, frozen.this, event)) {
+						iristk.situated.SituatedDialog.say state73 = dialog.new say();
+						state73.setText("Okay");
+						if (!flowRunner.callState(state73, frozen.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						runnose state75 = new runnose();
-						flowRunner.gotoState(state75, this, frozen.this, event);
+						runnose state74 = new runnose();
+						flowRunner.gotoState(state74, this, frozen.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1318,14 +1298,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("flu").set(1, map.get("flu").get(1) + 1);
-						iristk.situated.SituatedDialog.say state76 = dialog.new say();
-						state76.setText("Good for you");
-						if (!flowRunner.callState(state76, frozen.this, event)) {
+						iristk.situated.SituatedDialog.say state75 = dialog.new say();
+						state75.setText("Good for you");
+						if (!flowRunner.callState(state75, frozen.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						runnose state77 = new runnose();
-						flowRunner.gotoState(state77, this, frozen.this, event);
+						runnose state76 = new runnose();
+						flowRunner.gotoState(state76, this, frozen.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1376,14 +1356,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state78 = dialog.new say();
-				state78.setText("Do you have a runny nose?");
-				if (!flowRunner.callState(state78, runnose.this, event)) {
+				iristk.situated.SituatedDialog.say state77 = dialog.new say();
+				state77.setText("Do you have a runny nose?");
+				if (!flowRunner.callState(state77, runnose.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state79 = dialog.new listen();
-				if (!flowRunner.callState(state79, runnose.this, event)) {
+				iristk.situated.SituatedDialog.listen state78 = dialog.new listen();
+				if (!flowRunner.callState(state78, runnose.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1399,14 +1379,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					EXECUTION: {
 						map.get("comcold").set(0, map.get("comcold").get(0) + 1); map.get("comcold").set(1, map.get("comcold").get(1) + 1);
 						map.get("flu").set(0, map.get("flu").get(0) + 1); map.get("flu").set(1, map.get("flu").get(1) + 1);
-						iristk.situated.SituatedDialog.say state80 = dialog.new say();
-						state80.setText("Okay");
-						if (!flowRunner.callState(state80, runnose.this, event)) {
+						iristk.situated.SituatedDialog.say state79 = dialog.new say();
+						state79.setText("Okay");
+						if (!flowRunner.callState(state79, runnose.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						endevaluation state81 = new endevaluation();
-						flowRunner.gotoState(state81, this, runnose.this, event);
+						endevaluation state80 = new endevaluation();
+						flowRunner.gotoState(state80, this, runnose.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1419,14 +1399,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					EXECUTION: {
 						map.get("comcold").set(1, map.get("comcold").get(1) + 1);
 						map.get("flu").set(1, map.get("flu").get(1) + 1);
-						iristk.situated.SituatedDialog.say state82 = dialog.new say();
-						state82.setText("Good for you");
-						if (!flowRunner.callState(state82, runnose.this, event)) {
+						iristk.situated.SituatedDialog.say state81 = dialog.new say();
+						state81.setText("Good for you");
+						if (!flowRunner.callState(state81, runnose.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						endevaluation state83 = new endevaluation();
-						flowRunner.gotoState(state83, this, runnose.this, event);
+						endevaluation state82 = new endevaluation();
+						flowRunner.gotoState(state82, this, runnose.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1477,14 +1457,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state84 = dialog.new say();
-				state84.setText("Are you feeling dizzy?");
-				if (!flowRunner.callState(state84, dizzy.this, event)) {
+				iristk.situated.SituatedDialog.say state83 = dialog.new say();
+				state83.setText("Are you feeling dizzy?");
+				if (!flowRunner.callState(state83, dizzy.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state85 = dialog.new listen();
-				if (!flowRunner.callState(state85, dizzy.this, event)) {
+				iristk.situated.SituatedDialog.listen state84 = dialog.new listen();
+				if (!flowRunner.callState(state84, dizzy.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1499,14 +1479,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state86 = dialog.new say();
-						state86.setText("Okay");
-						if (!flowRunner.callState(state86, dizzy.this, event)) {
+						iristk.situated.SituatedDialog.say state85 = dialog.new say();
+						state85.setText("Okay");
+						if (!flowRunner.callState(state85, dizzy.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						nausea state87 = new nausea();
-						flowRunner.gotoState(state87, this, dizzy.this, event);
+						nausea state86 = new nausea();
+						flowRunner.gotoState(state86, this, dizzy.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1518,14 +1498,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state88 = dialog.new say();
-						state88.setText("Good for you");
-						if (!flowRunner.callState(state88, dizzy.this, event)) {
+						iristk.situated.SituatedDialog.say state87 = dialog.new say();
+						state87.setText("Good for you");
+						if (!flowRunner.callState(state87, dizzy.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						nausea state89 = new nausea();
-						flowRunner.gotoState(state89, this, dizzy.this, event);
+						nausea state88 = new nausea();
+						flowRunner.gotoState(state88, this, dizzy.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1576,14 +1556,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state90 = dialog.new say();
-				state90.setText("Are you nauseous?");
-				if (!flowRunner.callState(state90, nausea.this, event)) {
+				iristk.situated.SituatedDialog.say state89 = dialog.new say();
+				state89.setText("Are you nauseous?");
+				if (!flowRunner.callState(state89, nausea.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state91 = dialog.new listen();
-				if (!flowRunner.callState(state91, nausea.this, event)) {
+				iristk.situated.SituatedDialog.listen state90 = dialog.new listen();
+				if (!flowRunner.callState(state90, nausea.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1598,14 +1578,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state92 = dialog.new say();
-						state92.setText("Okay");
-						if (!flowRunner.callState(state92, nausea.this, event)) {
+						iristk.situated.SituatedDialog.say state91 = dialog.new say();
+						state91.setText("Okay");
+						if (!flowRunner.callState(state91, nausea.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						vomit state93 = new vomit();
-						flowRunner.gotoState(state93, this, nausea.this, event);
+						vomit state92 = new vomit();
+						flowRunner.gotoState(state92, this, nausea.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1617,14 +1597,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state94 = dialog.new say();
-						state94.setText("Good for you");
-						if (!flowRunner.callState(state94, nausea.this, event)) {
+						iristk.situated.SituatedDialog.say state93 = dialog.new say();
+						state93.setText("Good for you");
+						if (!flowRunner.callState(state93, nausea.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						vomit state95 = new vomit();
-						flowRunner.gotoState(state95, this, nausea.this, event);
+						vomit state94 = new vomit();
+						flowRunner.gotoState(state94, this, nausea.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1675,14 +1655,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state96 = dialog.new say();
-				state96.setText("Have you vomited?");
-				if (!flowRunner.callState(state96, vomit.this, event)) {
+				iristk.situated.SituatedDialog.say state95 = dialog.new say();
+				state95.setText("Have you vomited?");
+				if (!flowRunner.callState(state95, vomit.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state97 = dialog.new listen();
-				if (!flowRunner.callState(state97, vomit.this, event)) {
+				iristk.situated.SituatedDialog.listen state96 = dialog.new listen();
+				if (!flowRunner.callState(state96, vomit.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1697,14 +1677,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state98 = dialog.new say();
-						state98.setText("Okay");
-						if (!flowRunner.callState(state98, vomit.this, event)) {
+						iristk.situated.SituatedDialog.say state97 = dialog.new say();
+						state97.setText("Okay");
+						if (!flowRunner.callState(state97, vomit.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						amnesia state99 = new amnesia();
-						flowRunner.gotoState(state99, this, vomit.this, event);
+						amnesia state98 = new amnesia();
+						flowRunner.gotoState(state98, this, vomit.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1716,14 +1696,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state100 = dialog.new say();
-						state100.setText("Good for you");
-						if (!flowRunner.callState(state100, vomit.this, event)) {
+						iristk.situated.SituatedDialog.say state99 = dialog.new say();
+						state99.setText("Good for you");
+						if (!flowRunner.callState(state99, vomit.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						amnesia state101 = new amnesia();
-						flowRunner.gotoState(state101, this, vomit.this, event);
+						amnesia state100 = new amnesia();
+						flowRunner.gotoState(state100, this, vomit.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1774,14 +1754,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state102 = dialog.new say();
-				state102.setText("Are you experiencing amnesia?");
-				if (!flowRunner.callState(state102, amnesia.this, event)) {
+				iristk.situated.SituatedDialog.say state101 = dialog.new say();
+				state101.setText("Are you experiencing amnesia?");
+				if (!flowRunner.callState(state101, amnesia.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
-				iristk.situated.SituatedDialog.listen state103 = dialog.new listen();
-				if (!flowRunner.callState(state103, amnesia.this, event)) {
+				iristk.situated.SituatedDialog.listen state102 = dialog.new listen();
+				if (!flowRunner.callState(state102, amnesia.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
@@ -1796,14 +1776,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(0, map.get("concussion").get(0) + 1); map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state104 = dialog.new say();
-						state104.setText("Okay");
-						if (!flowRunner.callState(state104, amnesia.this, event)) {
+						iristk.situated.SituatedDialog.say state103 = dialog.new say();
+						state103.setText("Okay");
+						if (!flowRunner.callState(state103, amnesia.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						endevaluation state105 = new endevaluation();
-						flowRunner.gotoState(state105, this, amnesia.this, event);
+						endevaluation state104 = new endevaluation();
+						flowRunner.gotoState(state104, this, amnesia.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1815,14 +1795,14 @@ public class DoctorFlow extends iristk.flow.Flow {
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						map.get("concussion").set(1, map.get("concussion").get(1) + 1);
-						iristk.situated.SituatedDialog.say state106 = dialog.new say();
-						state106.setText("Good for you");
-						if (!flowRunner.callState(state106, amnesia.this, event)) {
+						iristk.situated.SituatedDialog.say state105 = dialog.new say();
+						state105.setText("Good for you");
+						if (!flowRunner.callState(state105, amnesia.this, event)) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						endevaluation state107 = new endevaluation();
-						flowRunner.gotoState(state107, this, amnesia.this, event);
+						endevaluation state106 = new endevaluation();
+						flowRunner.gotoState(state106, this, amnesia.this, event);
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -1873,9 +1853,9 @@ public class DoctorFlow extends iristk.flow.Flow {
 			int eventResult;
 			Event event = new Event("state.enter");
 			EXECUTION: {
-				iristk.situated.SituatedDialog.say state108 = dialog.new say();
-				state108.setText("Hope you don't die!");
-				if (!flowRunner.callState(state108, endevaluation.this, event)) {
+				iristk.situated.SituatedDialog.say state107 = dialog.new say();
+				state107.setText("Hope you don't die!");
+				if (!flowRunner.callState(state107, endevaluation.this, event)) {
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
