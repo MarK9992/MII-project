@@ -23,12 +23,36 @@ public class DiseaseMap extends HashMap<String, ArrayList<Integer>> {
 	private static final int QUESTIONSMATCHINDEX = 1;
 	private static final int PERCENTAGEINDEX = 2;
 
+	// Constructors
+	
 	/**
 	 * Creates a new map.
 	 */
 	public DiseaseMap() {
 		super();
 		init();
+	}
+
+	// Methods
+	
+	/**
+	 * Updates the map's values for a yes to a question relative to a symptom.
+	 * 
+	 * @param symptom
+	 *            the related symptom
+	 */
+	public void answerSymptom(Symptom symptom) {
+		// TODO
+	}
+
+	/**
+	 * Updates the map's values for an asked question relative to a symptom.
+	 * 
+	 * @param symptom
+	 *            the related symptom
+	 */
+	public void questionSymptom(Symptom symptom) {
+		// TODO
 	}
 
 	/**
