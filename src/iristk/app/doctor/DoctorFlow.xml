@@ -363,7 +363,7 @@
 	<state id="evaluate">
 		<onentry>
 		<!-- So light!  -->
-		<exec>map.evaluate(); int c = map.get("concussion").get(2)</exec>
+		<exec>map.evaluate(); int c = map.getPercentage("concussion")</exec>
        	<if cond="(c&gt;70)">
 			<goto state="dizzy"/>
 		</if>
