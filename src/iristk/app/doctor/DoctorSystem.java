@@ -120,7 +120,7 @@ public class DoctorSystem {
 	}
 	
 	private void loadGrammar(RecognizerModule recognizer) throws RecognizerException, URISyntaxException {
-		recognizer.loadGrammar("default", getClass().getResource("QuizGrammar.xml").toURI());
+		recognizer.loadGrammar("default", getClass().getResource("DoctorGrammar.xml").toURI());
 		for (Question q : questions) {
 			recognizer.loadGrammar(q.getId(), q.getGrammar());
 		}
