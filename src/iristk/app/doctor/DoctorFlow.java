@@ -859,8 +859,6 @@ public class DoctorFlow extends iristk.flow.Flow {
 			Event event = new Event("state.enter");
 			EXECUTION: {
 				map.questionSymptom(Symptom.PAIN);
-				map.questionSymptom(Symptom.FLUCHEAT);
-				map.questionSymptom(Symptom.FLUCHEAT);
 				iristk.situated.SituatedDialog.say state48 = dialog.new say();
 				state48.setText("Are you in pain?");
 				if (!flowRunner.callState(state48, pain.this, event)) {

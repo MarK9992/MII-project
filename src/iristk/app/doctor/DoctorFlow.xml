@@ -224,8 +224,6 @@
 	<state id="pain"  extends="Dialog">
 		<onentry>
 			<exec>map.questionSymptom(Symptom.PAIN)</exec>
-			<exec>map.questionSymptom(Symptom.FLUCHEAT)</exec>
-			<exec>map.questionSymptom(Symptom.FLUCHEAT)</exec>
 			<dialog:say>Are you in pain?</dialog:say>
 			<send event="action.gesture" p:name="'emotion_anger'"/>
 			<dialog:listen/>
