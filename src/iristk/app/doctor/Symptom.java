@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 import iristk.app.doctor.Disease;
 
+// TODO turn it to a HashMap?
+
 /**
  * Enumeration of possible symptoms. Symptoms are related to one or several
  * symptom matches. Symptom matches consist of a disease and a number of points
@@ -22,33 +24,51 @@ public enum Symptom {
 	SOARTHROAT(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
 			Disease.FLU, 1), new SymptomMatch(Disease.BRONCHITIS, 1),
 			new SymptomMatch(Disease.PNEUMONIA, 1), new SymptomMatch(
-					Disease.MONO, 1)), COUGH(new SymptomMatch(
-			Disease.COMMONCOLD, 1), new SymptomMatch(Disease.FLU, 1),
-			new SymptomMatch(Disease.BRONCHITIS, 1), new SymptomMatch(
-					Disease.PNEUMONIA, 1)), HEADACHE(new SymptomMatch(
-			Disease.COMMONCOLD, 1), new SymptomMatch(Disease.FLU, 1),
-			new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
-					Disease.CONCUSSION, 1), new SymptomMatch(Disease.MONO, 1)), SLEEPY(
-			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(
-					Disease.CONCUSSION, 1), new SymptomMatch(
-					Disease.BRONCHITIS, 1), new SymptomMatch(
-					Disease.MYOCARDITIS, 1), new SymptomMatch(
-					Disease.PNEUMONIA, 1), new SymptomMatch(Disease.LYME, 1)), FEVER(
-			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(Disease.OTITIS,
-					1), new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
-					Disease.MYOCARDITIS, 1), new SymptomMatch(
-					Disease.PNEUMONIA, 1)), PAIN(new SymptomMatch(Disease.FLU,
-			3), new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
-			Disease.OTITIS, 1), new SymptomMatch(Disease.MYOCARDITIS, 1)), PAIN_MUSCLES(
-			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(Disease.LYME, 1)), PAIN_EARS(
-			new SymptomMatch(Disease.OTITIS, 1)), PAIN_EYES(new SymptomMatch(
-			Disease.FLU, 1)), PAIN_CHEST(new SymptomMatch(Disease.FLU, 1),
-			new SymptomMatch(Disease.MYOCARDITIS, 1)), RUNNY_NOSE(
-			new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
-					Disease.FLU, 1)), FROZEN(new SymptomMatch(Disease.FLU, 1)), DIZZY(
-			new SymptomMatch(Disease.CONCUSSION, 1)), NAUSEA(new SymptomMatch(
-			Disease.CONCUSSION, 1)), VOMIT(new SymptomMatch(Disease.CONCUSSION,
-			1)), AMNESIA(new SymptomMatch(Disease.CONCUSSION, 1));
+					Disease.MONO, 1)),
+
+	COUGH(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
+			Disease.FLU, 1), new SymptomMatch(Disease.BRONCHITIS, 1),
+			new SymptomMatch(Disease.PNEUMONIA, 1)),
+
+	HEADACHE(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
+			Disease.FLU, 1), new SymptomMatch(Disease.LYME, 1),
+			new SymptomMatch(Disease.CONCUSSION, 1), new SymptomMatch(
+					Disease.MONO, 1)),
+
+	SLEEPY(new SymptomMatch(Disease.FLU, 1), new SymptomMatch(
+			Disease.CONCUSSION, 1), new SymptomMatch(Disease.BRONCHITIS, 1),
+			new SymptomMatch(Disease.MYOCARDITIS, 1), new SymptomMatch(
+					Disease.PNEUMONIA, 1), new SymptomMatch(Disease.LYME, 1)),
+
+	FEVER(new SymptomMatch(Disease.FLU, 1),
+			new SymptomMatch(Disease.OTITIS, 1), new SymptomMatch(Disease.LYME,
+					1), new SymptomMatch(Disease.MYOCARDITIS, 1),
+			new SymptomMatch(Disease.PNEUMONIA, 1)),
+
+	PAIN(new SymptomMatch(Disease.FLU, 3), new SymptomMatch(Disease.LYME, 1),
+			new SymptomMatch(Disease.OTITIS, 1), new SymptomMatch(
+					Disease.MYOCARDITIS, 1)),
+
+	PAIN_MUSCLES(new SymptomMatch(Disease.FLU, 1), new SymptomMatch(
+			Disease.LYME, 1)),
+
+	PAIN_EARS(new SymptomMatch(Disease.OTITIS, 1)),
+
+	PAIN_EYES(new SymptomMatch(Disease.FLU, 1)),
+
+	PAIN_CHEST(new SymptomMatch(Disease.FLU, 1), new SymptomMatch(
+			Disease.MYOCARDITIS, 1)),
+
+	RUNNY_NOSE(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
+			Disease.FLU, 1)), FROZEN(new SymptomMatch(Disease.FLU, 1)),
+
+	DIZZY(new SymptomMatch(Disease.CONCUSSION, 1)),
+
+	NAUSEA(new SymptomMatch(Disease.CONCUSSION, 1)),
+
+	VOMIT(new SymptomMatch(Disease.CONCUSSION, 1)),
+
+	AMNESIA(new SymptomMatch(Disease.CONCUSSION, 1));
 
 	// TODO add all the symptoms and replace then in the flow by answerSymptom()
 	// or questionSymptom() calls
