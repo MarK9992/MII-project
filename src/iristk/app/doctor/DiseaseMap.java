@@ -77,7 +77,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 		while (it.hasNext()) {
 			key = it.next();
 			percentage(key);
-			System.out.println(get(key).get(PERCENTAGEINDEX));
+			System.out.println(key + " " + get(key).get(PERCENTAGEINDEX));
 		}
 	}
 
