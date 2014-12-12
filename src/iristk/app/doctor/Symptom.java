@@ -15,7 +15,23 @@ public enum Symptom {
 	// Constants
 	
 	SOARTHROAT(Disease.COMMONCOLD, Disease.FLU, Disease.BRONCHITIS, Disease.PNEUMONIA, Disease.MONO),
-	COUGH(Disease.COMMONCOLD, Disease.FLU, Disease.BRONCHITIS, Disease.PNEUMONIA);
+	COUGH(Disease.COMMONCOLD, Disease.FLU, Disease.BRONCHITIS, Disease.PNEUMONIA),
+	HEADACHE(Disease.COMMONCOLD, Disease.FLU, Disease.LYME, Disease.CONCUSSION, Disease.MONO),
+	SLEEPY(Disease.FLU, Disease.CONCUSSION, Disease.BRONCHITIS, Disease.MYOCARDITIS, Disease.PNEUMONIA, Disease.LYME),
+	FEVER(Disease.FLU, Disease.OTITIS, Disease.LYME, Disease.MYOCARDITIS, Disease.PNEUMONIA),
+	PAIN(Disease.FLU, Disease.LYME, Disease.OTITIS, Disease.MYOCARDITIS),
+	PAIN_MUSCLES(Disease.FLU, Disease.LYME),
+	PAIN_EARS(Disease.OTITIS),
+	PAIN_EYES(Disease.FLU),
+	PAIN_CHEST(Disease.FLU, Disease.MYOCARDITIS),
+	RUNNY_NOSE(Disease.COMMONCOLD, Disease.FLU),
+	FROZEN(Disease.FLU),
+	DIZZY(Disease.CONCUSSION),
+	NAUSEA(Disease.CONCUSSION),
+	VOMIT(Disease.CONCUSSION),
+	AMNESIA(Disease.CONCUSSION),
+	FLUCHEAT(Disease.FLU);
+	
 	// TODO add all the symptoms and replace then in the flow by answerSymptom() or questionSymptom() calls
 	
 	// Attributes
