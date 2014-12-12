@@ -86,4 +86,25 @@ public enum Symptom {
 
 		return diseases;
 	}
+
+	/**
+	 * Returns the number of points of a disease related to the symptom.
+	 * 
+	 * @param disease
+	 *            the disease to look for
+	 * @return the disease's points for that symptom or 0 if the given disease
+	 *         is not related to the symptom
+	 */
+	public int getDiseasePoints(Disease disease) {
+		Iterator<SymptomMatch> it = matches.iterator();
+		SymptomMatch smMatch;
+
+		do {
+			smMatch = it.next();
+		} while (it.hasNext() && disease != smMatch.getDisease());
+		if (smMatch.getDisease() != disease) {
+			return 0;
+		}
+		return smMatch.getPoints();
+	}
 }
