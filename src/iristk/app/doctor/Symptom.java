@@ -1,6 +1,8 @@
 package iristk.app.doctor;
 
 import java.util.HashSet;
+import java.util.Iterator;
+
 import iristk.app.doctor.Disease;
 
 /**
@@ -17,36 +19,51 @@ public enum Symptom {
 
 	// Constants
 
-	SOARTHROAT(Disease.COMMONCOLD, Disease.FLU, Disease.BRONCHITIS,
-			Disease.PNEUMONIA, Disease.MONO), COUGH(Disease.COMMONCOLD,
-			Disease.FLU, Disease.BRONCHITIS, Disease.PNEUMONIA), HEADACHE(
-			Disease.COMMONCOLD, Disease.FLU, Disease.LYME, Disease.CONCUSSION,
-			Disease.MONO), SLEEPY(Disease.FLU, Disease.CONCUSSION,
-			Disease.BRONCHITIS, Disease.MYOCARDITIS, Disease.PNEUMONIA,
-			Disease.LYME), FEVER(Disease.FLU, Disease.OTITIS, Disease.LYME,
-			Disease.MYOCARDITIS, Disease.PNEUMONIA), PAIN(Disease.FLU,
-			Disease.LYME, Disease.OTITIS, Disease.MYOCARDITIS), PAIN_MUSCLES(
-			Disease.FLU, Disease.LYME), PAIN_EARS(Disease.OTITIS), PAIN_EYES(
-			Disease.FLU), PAIN_CHEST(Disease.FLU, Disease.MYOCARDITIS), RUNNY_NOSE(
-			Disease.COMMONCOLD, Disease.FLU), FROZEN(Disease.FLU), DIZZY(
-			Disease.CONCUSSION), NAUSEA(Disease.CONCUSSION), VOMIT(
-			Disease.CONCUSSION), AMNESIA(Disease.CONCUSSION), FLUCHEAT(
-			Disease.FLU);
+	SOARTHROAT(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
+			Disease.FLU, 1), new SymptomMatch(Disease.BRONCHITIS, 1),
+			new SymptomMatch(Disease.PNEUMONIA, 1), new SymptomMatch(
+					Disease.MONO, 1)), COUGH(new SymptomMatch(
+			Disease.COMMONCOLD, 1), new SymptomMatch(Disease.FLU, 1),
+			new SymptomMatch(Disease.BRONCHITIS, 1), new SymptomMatch(
+					Disease.PNEUMONIA, 1)), HEADACHE(new SymptomMatch(
+			Disease.COMMONCOLD, 1), new SymptomMatch(Disease.FLU, 1),
+			new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
+					Disease.CONCUSSION, 1), new SymptomMatch(Disease.MONO, 1)), SLEEPY(
+			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(
+					Disease.CONCUSSION, 1), new SymptomMatch(
+					Disease.BRONCHITIS, 1), new SymptomMatch(
+					Disease.MYOCARDITIS, 1), new SymptomMatch(
+					Disease.PNEUMONIA, 1), new SymptomMatch(Disease.LYME, 1)), FEVER(
+			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(Disease.OTITIS,
+					1), new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
+					Disease.MYOCARDITIS, 1), new SymptomMatch(
+					Disease.PNEUMONIA, 1)), PAIN(new SymptomMatch(Disease.FLU,
+			3), new SymptomMatch(Disease.LYME, 1), new SymptomMatch(
+			Disease.OTITIS, 1), new SymptomMatch(Disease.MYOCARDITIS, 1)), PAIN_MUSCLES(
+			new SymptomMatch(Disease.FLU, 1), new SymptomMatch(Disease.LYME, 1)), PAIN_EARS(
+			new SymptomMatch(Disease.OTITIS, 1)), PAIN_EYES(new SymptomMatch(
+			Disease.FLU, 1)), PAIN_CHEST(new SymptomMatch(Disease.FLU, 1),
+			new SymptomMatch(Disease.MYOCARDITIS, 1)), RUNNY_NOSE(
+			new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
+					Disease.FLU, 1)), FROZEN(new SymptomMatch(Disease.FLU, 1)), DIZZY(
+			new SymptomMatch(Disease.CONCUSSION, 1)), NAUSEA(new SymptomMatch(
+			Disease.CONCUSSION, 1)), VOMIT(new SymptomMatch(Disease.CONCUSSION,
+			1)), AMNESIA(new SymptomMatch(Disease.CONCUSSION, 1));
 
 	// TODO add all the symptoms and replace then in the flow by answerSymptom()
 	// or questionSymptom() calls
 
 	// Attributes
 
-	private HashSet<Disease> diseases;
+	private HashSet<SymptomMatch> matches;
 
 	// Constructors
 
 	// Constructs the set of diseases of a symptom
-	private Symptom(Disease... args) {
-		diseases = new HashSet<Disease>();
-		for (Disease d : args) {
-			diseases.add(d);
+	private Symptom(SymptomMatch... args) {
+		matches = new HashSet<SymptomMatch>();
+		for (SymptomMatch sm : args) {
+			matches.add(sm);
 		}
 	}
 
@@ -58,6 +75,15 @@ public enum Symptom {
 	 * @return the value of the diseases field
 	 */
 	public HashSet<Disease> getDiseases() {
+		HashSet<Disease> diseases = new HashSet<Disease>();
+		Iterator<SymptomMatch> it = matches.iterator();
+		SymptomMatch smMatch;
+
+		while (it.hasNext()) {
+			smMatch = it.next();
+			diseases.add(smMatch.getDisease());
+		}
+
 		return diseases;
 	}
 }
