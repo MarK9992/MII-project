@@ -47,7 +47,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 		
 		while(it.hasNext()) {
 			disease = it.next();
-			incrementAnswersMatch(disease);
+			incrementAnswersMatch(disease, symptom);
 		}
 	}
 
@@ -132,9 +132,9 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 		put(Disease.LYME, new ArrayList<Integer>(list));
 	}
 
-	// Increments the number of answers matching a disease.
-	private void incrementAnswersMatch(Disease disease) {
-		get(disease).set(ANSWERSMATCHINDEX, get(disease).get(ANSWERSMATCHINDEX) + 1);
+	// Increments the number of answers matching a disease for a given symptom.
+	private void incrementAnswersMatch(Disease disease, Symptom symptom) {
+		get(disease).set(ANSWERSMATCHINDEX, get(disease).get(ANSWERSMATCHINDEX) + symptom.getDiseasePoints(disease));
 	}
 
 	// Increments the number of questions matching a disease.
