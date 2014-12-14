@@ -1,3 +1,6 @@
 *.class
 /doc/
 */bin/
+*.idea/
+*nohup.out
+project.iml
