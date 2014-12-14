@@ -87,20 +87,16 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
      * @return the first disease in the map after sorting, null if the map is empty
      */
     public Disease sort() {
-        HashMap<Disease, ArrayList<Integer>> sorted;
-        Iterator<Disease> it;
-        Disease d, top = null;
+        ArrayList<DiseaseMapping> sorted;
+        Disease top = null;
 
         sorted = sortByPercentage();
         //sorted = resolvePercentageEqualities(sorted);
-        it = sorted.keySet().iterator();
-        if(it.hasNext()) {
-            top = it.next();
-            System.out.println(top + " " + get(top));
+        if(!sorted.isEmpty()) {
+            top = sorted.get(0).getDisease();
         }
-        while (it.hasNext()) {
-            d = it.next();
-            System.out.println(d + " " + get(d));
+        for(DiseaseMapping dm: sorted) {
+            System.out.println(dm);
         }
         return top;
     }
@@ -175,37 +171,42 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 							/ get(key).get(QUESTIONSMATCHINDEX));
 	}
 
-    // Returns a hashmap sorted by decreasing percentages
-    private HashMap<Disease, ArrayList<Integer>> sortByPercentage() {
-        HashMap<Disease, ArrayList<Integer>> sorted = new HashMap<Disease, ArrayList<Integer>>();
+    // Returns a list of disease mappings sorted by decreasing percentages
+    private ArrayList<DiseaseMapping> sortByPercentage() {
+        HashMap<Disease, ArrayList<Integer>> copy = new HashMap<Disease, ArrayList<Integer>>(this);
+        ArrayList<DiseaseMapping> sorted = new ArrayList<DiseaseMapping>();
         Iterator<Disease> it;
         Disease key, toAdd;
 
-        while(size() != sorted.size()) {
-            it = keySet().iterator();
+        while(copy.size() != 0) {
+            it = copy.keySet().iterator();
             toAdd = null;
             while(it.hasNext()) {
                 key = it.next();
-                if(!sorted.containsKey(key)) {
-                    if(toAdd == null || getPercentage(toAdd) < getPercentage(key)) {
-                        toAdd = key;
-                    }
+                if(toAdd == null || getPercentage(toAdd) < getPercentage(key)) {
+                    toAdd = key;
                 }
             }
-            sorted.put(toAdd, get(toAdd));
+            sorted.add(convertEntry(toAdd));
+            copy.remove(toAdd);
         }
 
         return sorted;
+    }
+
+    // Converts an entry to DiseaseMapping
+    private DiseaseMapping convertEntry(Disease key) {
+        return new DiseaseMapping(key, getMatchingAnswers(key), getMatchingQuestions(key));
     }
 
     public static void main(String[] args) {
         DiseaseMap map = new DiseaseMap();
         map.get(Disease.MONO).set(0, 3);
         map.get(Disease.MONO).set(1, 3);
-        map.get(Disease.FLU).set(0, 3);
-        map.get(Disease.FLU).set(1, 10);
         map.get(Disease.CONCUSSION).set(0, 6);
         map.get(Disease.CONCUSSION).set(1, 6);
+        map.get(Disease.FLU).set(0, 3);
+        map.get(Disease.FLU).set(1, 10);
         map.evaluate();
         System.out.println(map.sortByPercentage());
     }
