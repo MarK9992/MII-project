@@ -91,7 +91,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
         Disease top = null;
 
         sorted = sortByPercentage();
-        //sorted = resolvePercentageEqualities(sorted);
+        sorted = resolvePercentageEqualities(sorted);
         if(!sorted.isEmpty()) {
             top = sorted.get(0).getDisease();
         }
@@ -194,6 +194,32 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
         return sorted;
     }
 
+    // resort the given disease mapping list by decreasing numbers of questions asked where the percentages are equal
+    private ArrayList<DiseaseMapping> resolvePercentageEqualities(ArrayList<DiseaseMapping> toSort) {
+        if(!toSort.isEmpty()) {
+            // TODO not only for the top entry
+            int maxIndex = 0;
+            DiseaseMapping buffer;
+
+            for (int i = 1; i + 1 <= toSort.size() && toSort.get(i).getPercentage() == toSort.get(maxIndex).getPercentage(); i++) {
+                if(toSort.get(i).getQuestions() > toSort.get(maxIndex).getQuestions()) {
+                    maxIndex = i;
+                }
+            }
+            buffer = toSort.get(0);
+            toSort.set(0, toSort.get(maxIndex));
+            toSort.set(maxIndex, buffer);
+            return toSort;
+        }
+        return null;
+    }
+
+    // sorts the given disease mapping list by decreasing numbers of questions asked
+    private ArrayList<DiseaseMapping> sortByQuestions(ArrayList<DiseaseMapping> toSort) {
+        // TODO
+        return toSort;
+    }
+
     // Converts an entry to DiseaseMapping
     private DiseaseMapping convertEntry(Disease key) {
         return new DiseaseMapping(key, getMatchingAnswers(key), getMatchingQuestions(key));
@@ -208,6 +234,6 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
         map.get(Disease.FLU).set(0, 3);
         map.get(Disease.FLU).set(1, 10);
         map.evaluate();
-        System.out.println(map.sortByPercentage());
+        System.out.println(map.sort());
     }
 }
