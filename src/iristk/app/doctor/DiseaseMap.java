@@ -81,7 +81,31 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 		}
 	}
 
-	/**
+    /**
+     * Outputs the map sorted by decreasing percentages and returns the top value.
+     *
+     * @return the first disease in the map after sorting, null if the map is empty
+     */
+    public Disease sort() {
+        HashMap<Disease, ArrayList<Integer>> sorted;
+        Iterator<Disease> it;
+        Disease d, top = null;
+
+        sorted = sortByPercentage();
+        //sorted = resolvePercentageEqualities(sorted);
+        it = sorted.keySet().iterator();
+        if(it.hasNext()) {
+            top = it.next();
+            System.out.println(top + " " + get(top));
+        }
+        while (it.hasNext()) {
+            d = it.next();
+            System.out.println(d + " " + get(d));
+        }
+        return top;
+    }
+
+    /**
 	 * Returns a disease's number of matching answers.
 	 * 
 	 * @param key
@@ -150,4 +174,39 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 					get(key).get(ANSWERSMATCHINDEX) * 100
 							/ get(key).get(QUESTIONSMATCHINDEX));
 	}
+
+    // Returns a hashmap sorted by decreasing percentages
+    private HashMap<Disease, ArrayList<Integer>> sortByPercentage() {
+        HashMap<Disease, ArrayList<Integer>> sorted = new HashMap<Disease, ArrayList<Integer>>();
+        Iterator<Disease> it;
+        Disease key, toAdd;
+
+        while(size() != sorted.size()) {
+            it = keySet().iterator();
+            toAdd = null;
+            while(it.hasNext()) {
+                key = it.next();
+                if(!sorted.containsKey(key)) {
+                    if(toAdd == null || getPercentage(toAdd) < getPercentage(key)) {
+                        toAdd = key;
+                    }
+                }
+            }
+            sorted.put(toAdd, get(toAdd));
+        }
+
+        return sorted;
+    }
+
+    public static void main(String[] args) {
+        DiseaseMap map = new DiseaseMap();
+        map.get(Disease.MONO).set(0, 3);
+        map.get(Disease.MONO).set(1, 3);
+        map.get(Disease.FLU).set(0, 3);
+        map.get(Disease.FLU).set(1, 10);
+        map.get(Disease.CONCUSSION).set(0, 6);
+        map.get(Disease.CONCUSSION).set(1, 6);
+        map.evaluate();
+        System.out.println(map.sortByPercentage());
+    }
 }
