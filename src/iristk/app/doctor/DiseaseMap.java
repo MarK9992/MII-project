@@ -3,7 +3,6 @@ package iristk.app.doctor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * Hashmap for storing disease evaluation results. Keys are the diseases, the
@@ -22,6 +21,8 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	private static final int ANSWERSMATCHINDEX = 0;
 	private static final int QUESTIONSMATCHINDEX = 1;
 	private static final int PERCENTAGEINDEX = 2;
+	
+	public ArrayList<String> checked_diseases =new ArrayList <String>();
 
 	// Constructors
 	
@@ -70,7 +71,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	/**
 	 * Calculates and displays the resulting percentages for each disease.
 	 */
-	public void evaluate() {
+	public void calculatePercentages() {
 		Iterator<Disease> it = keySet().iterator();
 		Disease key;
 
@@ -90,6 +91,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
         ArrayList<DiseaseMapping> sorted;
         Disease top = null;
 
+        calculatePercentages();
         sorted = sortByPercentage();
         sorted = resolvePercentageEqualities(sorted);
         if(!sorted.isEmpty()) {
@@ -99,6 +101,22 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
             System.out.println(dm);
         }
         return top;
+    }
+    
+    /**
+	Creates a list that stores the diseases we have asked specific questions about..-. 
+     */
+    public void top_diseases(Disease key) {
+    	checked_diseases.add(key.name());
+       
+    }
+    
+    /**
+	Prints the list--
+     */
+    public ArrayList<String> top_diseases_print() {
+    	return checked_diseases;
+       
     }
 
     /**
@@ -187,7 +205,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
                     toAdd = key;
                 }
             }
-            sorted.add(convertEntry(toAdd));
+            sorted.add(entryToDiseaseMapping(toAdd));
             copy.remove(toAdd);
         }
 
@@ -221,19 +239,7 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
     }
 
     // Converts an entry to DiseaseMapping
-    private DiseaseMapping convertEntry(Disease key) {
+    private DiseaseMapping entryToDiseaseMapping(Disease key) {
         return new DiseaseMapping(key, getMatchingAnswers(key), getMatchingQuestions(key));
-    }
-
-    public static void main(String[] args) {
-        DiseaseMap map = new DiseaseMap();
-        map.get(Disease.MONO).set(0, 3);
-        map.get(Disease.MONO).set(1, 3);
-        map.get(Disease.CONCUSSION).set(0, 6);
-        map.get(Disease.CONCUSSION).set(1, 6);
-        map.get(Disease.FLU).set(0, 3);
-        map.get(Disease.FLU).set(1, 10);
-        map.evaluate();
-        System.out.println(map.sort());
     }
 }
