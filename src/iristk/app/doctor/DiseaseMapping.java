@@ -6,6 +6,8 @@ package iristk.app.doctor;
  * The first integer represents the number of answers matching the disease.
  * The second one is the total number of questions asked matching the disease.
  * And the third one is a resulting percentage from the two previous integers.
+ * Disease mappings are used to represent key-values associations from the disease
+ * map in order to manipulate them into sortable lists for instance.
  *
  * @author Marc Karassev
  */
@@ -28,18 +30,17 @@ public class DiseaseMapping {
     /**
      * Constructs a new disease mapping with the given disease and numbers of matching questions and answers.
      *
-     * @param disease the disease mapped
-     * @param answers the number of matching answers
+     * @param disease   the disease mapped
+     * @param answers   the number of matching answers
      * @param questions the number of matching questions
      */
     public DiseaseMapping(Disease disease, int answers, int questions) {
         this.disease = disease;
         this.answers = answers;
         this.questions = questions;
-        if(questions != 0) {
+        if (questions != 0) {
             percentage = 100 * answers / questions;
-        }
-        else percentage = 0;
+        } else percentage = 0;
     }
 
     // Methods
