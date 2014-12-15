@@ -3,10 +3,6 @@ package iristk.app.doctor;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import iristk.app.doctor.Disease;
-
-// TODO turn it to a HashMap?
-
 /**
  * Enumeration of possible symptoms. Symptoms are related to one or several
  * symptom matches. Symptom matches consist of a disease and a number of points
@@ -42,7 +38,7 @@ public enum Symptom {
 
 	FEVER(new SymptomMatch(Disease.FLU, 1),
 			new SymptomMatch(Disease.OTITIS, 1), new SymptomMatch(Disease.LYME,
-					1), new SymptomMatch(Disease.MYOCARDITIS, 1),
+					1), new SymptomMatch(Disease.MYOCARDITIS, 1), new SymptomMatch(Disease.MONO, 1),
 			new SymptomMatch(Disease.PNEUMONIA, 1)),
 
 	PAIN(new SymptomMatch(Disease.FLU, 3), new SymptomMatch(Disease.LYME, 1),
@@ -60,7 +56,9 @@ public enum Symptom {
 			Disease.MYOCARDITIS, 1)),
 
 	RUNNY_NOSE(new SymptomMatch(Disease.COMMONCOLD, 1), new SymptomMatch(
-			Disease.FLU, 1)), FROZEN(new SymptomMatch(Disease.FLU, 1)),
+			Disease.FLU, 1)),
+
+	FROZEN(new SymptomMatch(Disease.FLU, 1)),
 
 	DIZZY(new SymptomMatch(Disease.CONCUSSION, 1)),
 
@@ -68,8 +66,35 @@ public enum Symptom {
 
 	VOMIT(new SymptomMatch(Disease.CONCUSSION, 1)),
 
-	AMNESIA(new SymptomMatch(Disease.CONCUSSION, 1));
+	AMNESIA(new SymptomMatch(Disease.CONCUSSION, 1)),
+	
+	BAD_HEARING(new SymptomMatch(Disease.OTITIS,1)),
+	
+	BAD_APPETITE(new SymptomMatch(Disease.OTITIS,1)),
+	
+	IRRITATED(new SymptomMatch(Disease.OTITIS,1)),
 
+	HISSING_SOUND(new SymptomMatch(Disease.BRONCHITIS,1)),
+	
+	TROUBLE_BREATHING(new SymptomMatch(Disease.BRONCHITIS,1), new SymptomMatch(Disease.PNEUMONIA,1)),
+	
+	SWOLLEN(new SymptomMatch(Disease.MONO,1)),
+	
+	DIFF_SWALL(new SymptomMatch(Disease.MONO,1)),
+	
+	BAD_BREATH(new SymptomMatch(Disease.MONO,1)),
+	
+	ENLARGED_TONSILS(new SymptomMatch(Disease.MONO,1)),
+	
+	ARYTHMIA(new SymptomMatch(Disease.MYOCARDITIS,1)),
+	
+	MUCUS(new SymptomMatch(Disease.PNEUMONIA,1)),
+	
+	WEIGHT_LOSS(new SymptomMatch(Disease.LYME,1)),
+	
+	TEMP_FACE_PARALYSIS(new SymptomMatch(Disease.LYME,1));
+	
+	
 	// TODO add all the symptoms and replace then in the flow by answerSymptom()
 	// or questionSymptom() calls
 
