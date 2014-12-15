@@ -6,8 +6,8 @@
 	xmlns:dialog="iristk.situated.SituatedDialog"
 	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SituatedDialog SituatedDialog.xsd">
 	
-	<import class="iristk.app.quiz.Question"/>
 	<import class="iristk.app.quiz.QuestionSet"/>
+	<import class="iristk.app.quiz.Question"/>
 	
 	<param name="questions" type="QuestionSet"/>
 	<param name="dialog" type="iristk.situated.SituatedDialog"/>
@@ -22,8 +22,6 @@
 	
 	<state id="Idle">
 		<onentry>
-	
-	
 			<dialog:attendNobody />
 			<!-- no dirtyness anymore -->
 			<!-- To add new diseases go to the init method of DiseaseMap.java -->
@@ -84,12 +82,12 @@
 	<state id="soar_throat"  extends="Dialog">
 		<onentry>
 			<!-- So smooth ! -->
+			<exec>map.questionSymptom(Symptom.SOARTHROAT)</exec>
 			<dialog:say>Do you have a soar throat?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.SOARTHROAT)</exec>
 			<dialog:say>You have a soar throat!</dialog:say>
 			<send event="action.gesture" p:name="'emotion_anger'"/>
 			<!-- So smooth ! (2) -->
@@ -97,7 +95,6 @@
 			<goto state="cough"/>
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.SOARTHROAT)</exec>
 			<send event="action.gesture" p:name="'wake_up'"/>
 			<goto state="cough"/>
 		</onevent>
@@ -118,19 +115,18 @@
 	<state id="cough"  extends="Dialog">
 		<onentry>
 			<!-- So smooth ! (3) -->
+			<exec>map.questionSymptom(Symptom.COUGH)</exec>
 			<dialog:say>Are you suffering from cough?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 			<!-- So smooth ! (4) -->
-			<exec>map.questionSymptom(Symptom.COUGH)</exec>
 			<exec>map.answerSymptom(Symptom.COUGH)</exec>
 			<dialog:say>Okay</dialog:say>
 			<goto state="headache"/>
 		</onevent>
-		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.COUGH)</exec>
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
 			<dialog:say>Good for you</dialog:say>
 			<goto state="headache"/>
 		</onevent>
@@ -150,19 +146,18 @@
 		
 		
 		<onentry>
+			<exec>map.questionSymptom(Symptom.HEADACHE)</exec>
 			<dialog:say>Are you suffering from headache?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.HEADACHE)</exec>
 			<exec>map.answerSymptom(Symptom.HEADACHE)</exec>
 			<dialog:say>Okay</dialog:say>
 			<goto state="sleepy"/>
 			
 		</onevent>
-		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.HEADACHE)</exec> 
+		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
 			<dialog:say>Good for you</dialog:say>
 			<goto state="sleepy"/>
 		</onevent>
@@ -177,19 +172,19 @@
 	
 	<state id="sleepy"  extends="Dialog">
 		<onentry>
+			<exec>map.questionSymptom(Symptom.SLEEPY)</exec>
 			<dialog:say>Are you sleepy?</dialog:say>
 			<dialog:listen/>
 			
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.SLEEPY)</exec>
-			<exec>map.answerSymptom(Symptom.SLEEPY)</exec>
+						<exec>map.answerSymptom(Symptom.SLEEPY)</exec>
 			<dialog:say>Okay</dialog:say>
 			<goto state="fever"/>
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.SLEEPY)</exec>
+	
 			<dialog:say>Good for you, pneumonia</dialog:say>
 			<goto state="fever"/>
 		</onevent>
@@ -203,19 +198,18 @@
 	
 	<state id="fever"  extends="Dialog">
 		<onentry>
+			<exec>map.questionSymptom(Symptom.FEVER)</exec>
 			<dialog:say>Do you have fever?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-		<exec>map.questionSymptom(Symptom.FEVER)</exec>
 		<exec>map.answerSymptom(Symptom.FEVER)</exec>
 			<dialog:say>Okay</dialog:say>
 			<goto state="pain"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.FEVER)</exec>
 			<dialog:say>Good for you</dialog:say>
 			<goto state="pain"/>
 		</onevent>
@@ -229,19 +223,18 @@
 	
 	<state id="pain"  extends="Dialog">
 		<onentry>
+			<exec>map.questionSymptom(Symptom.PAIN)</exec>
 			<dialog:say>Are you in pain?</dialog:say>
 			<send event="action.gesture" p:name="'emotion_anger'"/>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.PAIN)</exec>
 			<dialog:say>Where are you suffering from pain? In your eyes, your ears, your muscles or your chest?</dialog:say>
 			<goto state="whatpain"/>
 		</onevent>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.PAIN)</exec>
 			<dialog:say>Keep it up!</dialog:say>
 			<goto state="evaluate"/>
 		</onevent>
@@ -324,69 +317,31 @@
 	<state id="evaluate">
 		<onentry>
 		<!-- So light! -->
-		<!-- <exec>System.out.println(map.sort())</exec>-->
-		
-		<exec>map.top_diseases(map.sort())</exec>
-		<var name="c" type = "String" value="map.sort()"/>
-		
-		 <if cond="c=='LYME'">
-		 	<goto state="weight_loss"/>
-		 </if>
-		 <if cond="c=='OTITIS'">
-		 	<goto state="bad_hearing"/>
-		 </if>
-		 <if cond="c=='CONCUSSION'">
-		 	<goto state="dizzy"/>	 
-		 </if>
-		 <if cond="c=='MYOCARDITIS'">
-		 <goto state="arythmia"/>
-		 </if>
-		 <if cond="c=='COMMONCOLD'">
-		 	<goto state="runnose"/>
-		 </if>
-		 <if cond="c=='FLU'">
-		 	<goto state="frozen"/>
-		 </if>
-		 <if cond="c=='PNEUMONIA'">
-		 	<goto state="mucus"/>
-		 </if>
-		 <if cond="c=='BRONCHITIS'">
-		 	<goto state="hissing"/>
-		 </if>
-		 <if cond="c=='MONO'">
-		 	<goto state="swollen"/>
-		 </if>
-		 
-		 
-		 
+		<exec>map.evaluate()</exec>
 		<!-- Okay I've not seen the 'c' thing. We'll need to discuss about how you can get and test the percentages.
 		Perhaps the following seems OK -->
-		
-		
-		<!-- 
-			Ta ut första sjukdomen i listan och sedan "hoppa" in i dess följfrågor		
-		 -->
-		
-	
+		<var name="c" type="int" value="map.getPercentage(Disease.CONCUSSION)"/>
+       	<if cond="(c&gt;70)">
+			<goto state="dizzy"/>
+		</if>
 		</onentry>
 	</state>
 	
 	
 	<state id="frozen"  extends="Dialog">
-		<onentry>	
+		<onentry>
+			<exec>map.questionSymptom(Symptom.FROZEN)</exec>	
 			<dialog:say>Are you frozen?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.FROZEN)</exec>
 			<exec>map.answerSymptom(Symptom.FROZEN)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="runnose"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.FROZEN)</exec>
 			<dialog:say>Good for you</dialog:say>
 			<goto state="runnose"/>
 		</onevent>
@@ -399,20 +354,19 @@
 	</state>
 	
 	<state id="runnose"  extends="Dialog">
-		<onentry>	
+		<onentry>
+			<exec>map.questionSymptom(Symptom.RUNNY_NOSE)</exec>	
 			<dialog:say>Do you have a runny nose?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.RUNNY_NOSE)</exec>
 			<exec>map.answerSymptom(Symptom.RUNNY_NOSE)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="endevaluation"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.RUNNY_NOSE)</exec>
 			<dialog:say>Good for you</dialog:say>
 			<goto state="endevaluation"/>
 		</onevent>
@@ -431,15 +385,13 @@
 			<dialog:listen/>
 		</onentry>
 		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.DIZZY)</exec>	 
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 			<exec>map.answerSymptom(Symptom.DIZZY)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="nausea"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.DIZZY)</exec>	
 			<dialog:say>Good for you</dialog:say>
 			<goto state="nausea"/>
 		</onevent>
@@ -452,20 +404,19 @@
 	</state>
 	
 	<state id="nausea"  extends="Dialog">
-		<onentry>	
+		<onentry>
+			<exec>map.questionSymptom(Symptom.NAUSEA)</exec>	
 			<dialog:say>Are you nauseous?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.NAUSEA)</exec> 
+		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
 			<exec>map.answerSymptom(Symptom.NAUSEA)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="vomit"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.NAUSEA)</exec>
 			<dialog:say>Good for you</dialog:say>
 			<goto state="vomit"/>
 		</onevent>
@@ -479,19 +430,18 @@
 	
 	<state id="vomit"  extends="Dialog">
 		<onentry>
+			<exec>map.questionSymptom(Symptom.VOMIT)</exec>	
 			<dialog:say>Have you vomited?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.VOMIT)</exec>	
 			<exec>map.answerSymptom(Symptom.VOMIT)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="amnesia"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.VOMIT)</exec>	
 			<dialog:say>Good for you</dialog:say>
 			<goto state="amnesia"/>
 		</onevent>
@@ -505,19 +455,18 @@
 	
 	<state id="amnesia"  extends="Dialog">
 		<onentry>
+			<exec>map.questionSymptom(Symptom.AMNESIA)</exec>	
 			<dialog:say>Are you experiencing amnesia?</dialog:say>
 			<dialog:listen/>
 		</onentry>
 		
 		<onevent name="sense.user.speech**" cond="event?:sem:yes"> 
-			<exec>map.questionSymptom(Symptom.AMNESIA)</exec>	
 			<exec>map.answerSymptom(Symptom.AMNESIA)</exec>	
 			<dialog:say>Okay</dialog:say>
 			<goto state="endevaluation"/>
 			
 		</onevent>
 		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.AMNESIA)</exec>	
 			<dialog:say>Good for you</dialog:say>
 			<goto state="endevaluation"/>
 		</onevent>
@@ -529,380 +478,11 @@
 		</onevent>
 	</state>
 	
-
-	
-	<state id="bad_hearing"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have a bad hearing?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.BAD_HEARING)</exec>
-			<exec>map.answerSymptom(Symptom.BAD_HEARING)</exec> 
-			<goto state="poor_appetite"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.BAD_HEARING)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="poor_appetite"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	
-	<state id="poor_appetite"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have a poor appetite?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.BAD_APPETITE)</exec>
-			<exec>map.answerSymptom(Symptom.BAD_APPETITE)</exec> 
-			<goto state="irritated"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.BAD_APPETITE)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="irritated"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-
-	<state id="irritated"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you feel irritated?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.IRRITATED)</exec>
-			<exec>map.answerSymptom(Symptom.IRRITATED)</exec> 
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.IRRITATED)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="hissing"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you hear a hissing sound when you breath?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.HISSING_SOUND)</exec>
-			<exec>map.answerSymptom(Symptom.HISSING_SOUND)</exec> 
-			<goto state="trouble_breathing"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.HISSING_SOUND)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="trouble_breathing"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="trouble_breathing"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have a trouble breathing?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.TROUBLE_BREATHING)</exec>
-			<exec>map.answerSymptom(Symptom.TROUBLE_BREATHING)</exec> 
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.TROUBLE_BREATHING)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="swollen"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have swollen lymph nodes, neck, armpits and groin?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.SWOLLEN)</exec>
-			<exec>map.answerSymptom(Symptom.SWOLLEN)</exec> 
-			<goto state="diff_swall"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.SWOLLEN)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="diff_swall"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="diff_swall"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have trouble swalloing?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.DIFF_SWALL)</exec>
-			<exec>map.answerSymptom(Symptom.DIFF_SWALL)</exec> 
-			<goto state="bad_breath"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.DIFF_SWALL)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="bad_breath"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="bad_breath"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have a bad breath?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.BAD_BREATH)</exec>
-			<exec>map.answerSymptom(Symptom.BAD_BREATH)</exec> 
-			<goto state="enlarged_tonsils"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.BAD_BREATH)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="enlarged_tonsils"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="enlarged_tonsils"  extends="Dialog">
-		<onentry>
-			<dialog:say>Are your tonsils enlarged?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.ENLARGED_TONSILS)</exec>
-			<exec>map.answerSymptom(Symptom.ENLARGED_TONSILS)</exec> 
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.ENLARGED_TONSILS)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="arythmia"  extends="Dialog">
-		<onentry>
-			<dialog:say>Are you experiencing arythmia?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.ARYTHMIA)</exec>
-			<exec>map.answerSymptom(Symptom.ARYTHMIA)</exec> 
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.ARYTHMIA)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="mucus"  extends="Dialog">
-		<onentry>
-			<dialog:say>Are you experiencing that your mucus is in a green or brown color?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.MUCUS)</exec>
-			<exec>map.answerSymptom(Symptom.MUCUS)</exec> 
-			<goto state="trouble_breathing"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.MUCUS)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="trouble_breathing"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="weight_loss"  extends="Dialog">
-		<onentry>
-			<dialog:say>Have you lost weight?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.WEIGHT_LOSS)</exec>
-			<exec>map.answerSymptom(Symptom.WEIGHT_LOSS)</exec> 
-			<goto state="temp_face_paralysis"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no">
-			<exec>map.questionSymptom(Symptom.WEIGHT_LOSS)</exec> 
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="temp_face_paralysis"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	<state id="temp_face_paralysis"  extends="Dialog">
-		<onentry>
-			<dialog:say>Do you have swollen lymph nodes, neck, armpits and groin?</dialog:say>
-			<dialog:listen/>
-		</onentry>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:yes">
-			<exec>map.questionSymptom(Symptom.TEMP_FACE_PARALYSIS)</exec>
-			<exec>map.answerSymptom(Symptom.TEMP_FACE_PARALYSIS)</exec> 
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:no"> 
-			<exec>map.questionSymptom(Symptom.TEMP_FACE_PARALYSIS)</exec>
-			<dialog:say>Keep it up!</dialog:say>
-			<goto state="endevaluation"/>
-		</onevent>
-		
-		<onevent name="sense.user.speech**" cond="event?:sem:repeat">
-				<reentry/>
-			</onevent>
-		<onevent name="sense.user.speech**">
-				<reentry/>
-		</onevent>
-	</state>
-	
-	
 	<state id="endevaluation"  extends="Dialog">
 		<onentry>
-		
-		<var name="d" type = "String" value="map.sort()"/>
-
-		 <if cond="map.top_diseases_print().contains(d)">
-			 <if cond="d=='LYME'">
-			 	<dialog:say>You are suffering from lyme disease</dialog:say>
-			 </if>
-			 <if cond="d=='OTITIS'">
-			 	<dialog:say>You are suffering from otitis</dialog:say>
-			 </if>
-			 <if cond="d=='CONCUSSION'">
-			 	<dialog:say>You are suffering from concussion</dialog:say> 
-			 </if>
-			 <if cond="d=='MYOCARDITIS'">
-			 <dialog:say>You are suffering from myocarditis</dialog:say>
-			 </if>
-			 <if cond="d=='COMMONCOLD'">
-			 	<dialog:say>You are suffering from common cold</dialog:say>
-			 </if>
-			 <if cond="d=='FLU'">
-			 	<dialog:say>You are suffering from flu</dialog:say>
-			 </if>
-			 <if cond="d=='PNEUMONIA'">
-			 	<dialog:say>You are suffering from pneumonia</dialog:say>
-			 </if>
-			 <if cond="d=='BRONCHITIS'">
-			 	<dialog:say>You are suffering from bronchitis</dialog:say>
-			 </if>
-			 <if cond="d=='MONO'">
-			 	<dialog:say>You are suffering from mono</dialog:say>
-			 </if>
-
-		 <else />
-		 	<goto state="evaluate"/>
-		 </if>
-		
-		
-			
+			<dialog:say>Hope you don't die!</dialog:say>
 		</onentry>
 	</state>
-	
 
 <!--  	<state id="Idle">
 		<onentry>
