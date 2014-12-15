@@ -21,8 +21,6 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	private static final int ANSWERSMATCHINDEX = 0;
 	private static final int QUESTIONSMATCHINDEX = 1;
 	private static final int PERCENTAGEINDEX = 2;
-	
-	public ArrayList<String> checked_diseases =new ArrayList <String>();
 
 	// Constructors
 	
@@ -35,17 +33,17 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 	}
 
 	// Methods
-	
+
 	/**
 	 * Updates the map's values for a yes to a question relative to a symptom.
-	 * 
+	 *
 	 * @param symptom
 	 *            the related symptom
 	 */
 	public void answerSymptom(Symptom symptom) {
 		Iterator<Disease> it = symptom.getDiseases().iterator();
 		Disease disease;
-		
+
 		while(it.hasNext()) {
 			disease = it.next();
 			incrementAnswersMatch(disease, symptom);
@@ -68,9 +66,9 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 		}
 	}
 
-	/**
-	 * Calculates and displays the resulting percentages for each disease.
-	 */
+    /**
+     * Calculates and displays the resulting percentages for each disease.
+     */
 	public void calculatePercentages() {
 		Iterator<Disease> it = keySet().iterator();
 		Disease key;
@@ -81,43 +79,6 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 			System.out.println(key + " " + get(key).get(PERCENTAGEINDEX));
 		}
 	}
-
-    /**
-     * Outputs the map sorted by decreasing percentages and returns the top value.
-     *
-     * @return the first disease in the map after sorting, null if the map is empty
-     */
-    public Disease sort() {
-        ArrayList<DiseaseMapping> sorted;
-        Disease top = null;
-
-        calculatePercentages();
-        sorted = sortByPercentage();
-        sorted = resolvePercentageEqualities(sorted);
-        if(!sorted.isEmpty()) {
-            top = sorted.get(0).getDisease();
-        }
-        for(DiseaseMapping dm: sorted) {
-            System.out.println(dm);
-        }
-        return top;
-    }
-    
-    /**
-	Creates a list that stores the diseases we have asked specific questions about..-. 
-     */
-    public void top_diseases(Disease key) {
-    	checked_diseases.add(key.name());
-       
-    }
-    
-    /**
-	Prints the list--
-     */
-    public ArrayList<String> top_diseases_print() {
-    	return checked_diseases;
-       
-    }
 
     /**
 	 * Returns a disease's number of matching answers.
@@ -189,57 +150,8 @@ public class DiseaseMap extends HashMap<Disease, ArrayList<Integer>> {
 							/ get(key).get(QUESTIONSMATCHINDEX));
 	}
 
-    // Returns a list of disease mappings sorted by decreasing percentages
-    private ArrayList<DiseaseMapping> sortByPercentage() {
-        HashMap<Disease, ArrayList<Integer>> copy = new HashMap<Disease, ArrayList<Integer>>(this);
-        ArrayList<DiseaseMapping> sorted = new ArrayList<DiseaseMapping>();
-        Iterator<Disease> it;
-        Disease key, toAdd;
-
-        while(copy.size() != 0) {
-            it = copy.keySet().iterator();
-            toAdd = null;
-            while(it.hasNext()) {
-                key = it.next();
-                if(toAdd == null || getPercentage(toAdd) < getPercentage(key)) {
-                    toAdd = key;
-                }
-            }
-            sorted.add(entryToDiseaseMapping(toAdd));
-            copy.remove(toAdd);
-        }
-
-        return sorted;
-    }
-
-    // resort the given disease mapping list by decreasing numbers of questions asked where the percentages are equal
-    private ArrayList<DiseaseMapping> resolvePercentageEqualities(ArrayList<DiseaseMapping> toSort) {
-        if(!toSort.isEmpty()) {
-            // TODO not only for the top entry
-            int maxIndex = 0;
-            DiseaseMapping buffer;
-
-            for (int i = 1; i + 1 <= toSort.size() && toSort.get(i).getPercentage() == toSort.get(maxIndex).getPercentage(); i++) {
-                if(toSort.get(i).getQuestions() > toSort.get(maxIndex).getQuestions()) {
-                    maxIndex = i;
-                }
-            }
-            buffer = toSort.get(0);
-            toSort.set(0, toSort.get(maxIndex));
-            toSort.set(maxIndex, buffer);
-            return toSort;
-        }
-        return null;
-    }
-
-    // sorts the given disease mapping list by decreasing numbers of questions asked
-    private ArrayList<DiseaseMapping> sortByQuestions(ArrayList<DiseaseMapping> toSort) {
-        // TODO
-        return toSort;
-    }
-
-    // Converts an entry to DiseaseMapping
-    private DiseaseMapping entryToDiseaseMapping(Disease key) {
+    // Converts an entry to a DiseaseMapping instance.
+    public DiseaseMapping entryToDiseaseMapping(Disease key) {
         return new DiseaseMapping(key, getMatchingAnswers(key), getMatchingQuestions(key));
     }
 }
