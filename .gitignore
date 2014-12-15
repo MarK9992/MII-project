@@ -1,7 +1,7 @@
 *.class
-/doc/
-*/bin/
+doc/
+bin/
 *.idea/
 *nohup.out
 IrisTKDoctor.iml
-*/out/
+out/
