@@ -3,4 +3,5 @@
 */bin/
 *.idea/
 *nohup.out
-project.iml
+IrisTKDoctor.iml
+*/out/
